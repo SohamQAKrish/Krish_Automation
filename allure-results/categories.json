@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Skipped tests",
+    "messageRegex": ".*",
+    "matchedStatuses": [
+      "skipped"
+    ]
+  },
+  {
+    "name": "WebElement Locator Failure",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*TimeoutException.*" 
+  },
+   {
+    "name": "Test Script Failure",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*ElementClickInterceptedException.*" 
+  },
+   {
+    "name": "Test Script Failure",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*StaleElementReferenceException.*" 
+  },
+  {
+    "name": "Environment Data Failure",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*Environment Attribute is not present for Environment.*",
+    "traceRegex": ".*CustomExceptions.*" 
+  },
+  {
+    "name": "Test Data Failure",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*Test Case Data is not present in TestData.yaml.*",
+    "traceRegex": ".*CustomExceptions.*" 
+  },
+  {
+    "name": "Test Data Failure",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*Attribute is not present in Test case data.*",
+    "traceRegex": ".*CustomExceptions.*" 
+  },
+  {
+    "name": "Assertion Failure",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*ComparisonFailure.*"
+  }
+]

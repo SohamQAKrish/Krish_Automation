@@ -1,0 +1,88 @@
+# More examples of Codefresh YAML can be found at
+# https://codefresh.io/docs/docs/yaml-examples/examples/
+
+# Possible values for MODULE variable to be updated in Codefresh UI while triggering the pipeline:
+# <<list of comma separated module names to be updated here>>
+
+version: "1.0"
+# Stages can help you organize your steps in stages
+stages:
+  - "clone"
+  - "build"
+  - "test"
+
+services:
+  name: test-services
+  composition:
+    hub:
+      image: selenium/hub:3.141.59
+      ports:
+        - "4444:4444"
+      environment:
+        - HUB_HOST=hub
+        - GRID_MAX_SESSION=12
+        - GRID_BROWSER_TIMEOUT=3400
+        - GRID_TIMEOUT=3600
+    chrome:
+      image: selenium/node-chrome:3.141.59
+      depends_on:
+        - hub
+      shm_size: '1gb'
+      environment:
+        - HUB_PORT_4444_TCP_ADDR=hub
+        - HUB_PORT_4444_TCP_PORT=4444
+        - NODE_MAX_SESSION=12
+        - NODE_MAX_INSTANCES=12
+      ports:
+        - "5900:5900"
+
+steps:
+  clone:
+    title: "Clone UI Automation repository"
+    type: "git-clone"
+    repo: "krish_automation"
+    # CF_BRANCH value is auto set when pipeline is triggered
+    # Learn more at codefresh.io/docs/docs/codefresh-yaml/variables/
+    revision: "${{CF_BRANCH}}"
+    git: "Krish_Automation"
+    stage: "clone"
+
+  build:
+    title: "Build Docker image"
+    type: "build"
+    image_name: "krish automation"
+    working_directory: "${{clone}}"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+    dockerfile: "Dockerfile"
+    stage: "build"
+    disable_push: true
+
+  ModuleWiseTestPhase:
+    title: "Run Selenium Tests"
+    type: parallel
+    stage: "test"
+    steps:
+      krishModule:
+        title: krish Module
+        image: '${{build}}'
+        environment:
+          - HUB_HOST=hub
+          - GRID_BROWSER_TIMEOUT=3400
+          - GRID_TIMEOUT=3600
+        depends_on:
+          - chrome      
+        commands: 
+          - 'cd /usr/share/mplus'
+          - 'mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources/regression -DsuiteXmlFile=${{MODULE}}.xml'
+          - 'cp -r ./allure-results /codefresh/volume/'    
+        services:
+          - test-services
+          
+  allure-reports:
+           title: "Generate Test Report"
+           image: codefresh/cf-docker-test-reporting
+           working_directory: '${{CF_VOLUME_PATH}}/'
+           environment:
+                 - CF_STORAGE_INTEGRATION=azure-codefreshtestartifacts-blob
+                 - BUCKET_NAME=codefreshtestartifacts
+           stage: "test"
