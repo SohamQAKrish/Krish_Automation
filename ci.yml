@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - '*'
+
+jobs:
+  clone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repository
+        uses: actions/checkout@v2
+      # You may optionally specify additional steps for setting up Git configuration here
+
+  build:
+    runs-on: ubuntu-latest
+    needs: clone
+    steps:
+      - name: Building Docker image
+        run: |
+          docker build -t managerplus_mplusuiautomation:${{ github.ref }} .
+      # Additional steps can be added for tagging and pushing the Docker image if needed
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    services:
+      selenium_hub:
+        image: selenium/hub:3.141.59
+        ports:
+          - "4444:4444"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Selenium Tests
+        run: |
+          docker run --rm --network host -v "$(pwd)/allure-results:/codefresh/volume/allure-results" managerplus_mplusuiautomation mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+        # Make sure to adjust the Docker run command as per your requirements
+        # This assumes that your Docker image contains Maven and all necessary dependencies for running your tests
+        # Adjust the paths and commands accordingly
+
+  generate-report:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Install Allure Commandline
+        run: |
+          sudo apt-add-repository ppa:qameta/allure -y
+          sudo apt-get update
+          sudo apt-get install allure -y
+
+      - name: Generate Test Report
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Archive Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
