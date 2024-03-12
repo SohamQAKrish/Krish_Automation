@@ -30,6 +30,7 @@
         </developer>
         
     </developers>
+    <!--Below all are required dependencies-->
 
     <dependencies>
         <dependency>
