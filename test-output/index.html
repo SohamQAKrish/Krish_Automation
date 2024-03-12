@@ -51,7 +51,7 @@
               <ul>
                 <li>
                   <a href="#" panel-name="test-xml-Local_Test_Suite" class="navigator-link ">
-                    <span>D:\Krish_Automation\src\test\resources\LocalTestSuite.xml</span>
+                    <span>C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\src\test\resources\LocalTestSuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -137,7 +137,7 @@
         </div> <!-- panel Local_Test_Suite -->
         <div panel-name="test-xml-Local_Test_Suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">D:\Krish_Automation\src\test\resources\LocalTestSuite.xml</span>
+            <span class="header-content">C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\src\test\resources\LocalTestSuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -145,9 +145,9 @@
 &lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
 &lt;suite name=&quot;Local Test Suite&quot; guice-stage=&quot;DEVELOPMENT&quot;&gt;
   &lt;test thread-count=&quot;5&quot; name=&quot;Local Tests&quot;&gt;
-    &lt;parameter name=&quot;environment&quot; value=&quot;QA&quot;/&gt;
-    &lt;parameter name=&quot;defaultTimeout&quot; value=&quot;30&quot;/&gt;
-    &lt;parameter name=&quot;browser&quot; value=&quot;Chrome&quot;/&gt;
+    &lt;parameter name=&quot;environment&quot; value=&quot;${environment}&quot;/&gt;
+    &lt;parameter name=&quot;defaultTimeout&quot; value=&quot;${defaultTimeout}&quot;/&gt;
+    &lt;parameter name=&quot;browser&quot; value=&quot;${browser}&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest&quot;&gt;
         &lt;methods&gt;
@@ -197,12 +197,12 @@ data.addRows(1);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'testOnitSukaMenCategoryNavigation')
 data.setCell(0, 2, 'sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest')
-data.setCell(0, 3, 9332);
+data.setCell(0, 3, 37401);
 window.suiteTableData['Local_Test_Suite']= { tableData: data, tableDiv: 'times-div-Local_Test_Suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 9 seconds</span>
+              <span class="suite-total-time">Total running time: 37 seconds</span>
               <div id="times-div-Local_Test_Suite">
               </div> <!-- times-div-Local_Test_Suite -->
             </div> <!-- times-div -->
