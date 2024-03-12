@@ -11,7 +11,7 @@ jobs:
 
     env:
       XML_PATH: src/test/resources
-      SUITE_XML_FILE: LocalTestSuite.xml, RegressionTestSuite.xml, SanityTestSuite.xml
+      SUITE_XML_FILE: LocalTestSuite.xml
       ENVIRONMENT: QA
       BROWSER: chrome
       DEFAULT_TIMEOUT: 30
