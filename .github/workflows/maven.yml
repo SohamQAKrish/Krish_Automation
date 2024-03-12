@@ -11,7 +11,7 @@ jobs:
 
     env:
       XML_PATH: src/test/resources
-      SUITE_XML_FILE: LocalTestSuite.xml
+      SUITE_XML_FILE: LocalTestSuite.xml,RegressionTestSuite.xml,SanityTestSuite.xml
       ENVIRONMENT: QA
       BROWSER: chrome
       DEFAULT_TIMEOUT: 30
@@ -30,6 +30,15 @@ jobs:
 
     - name: Build with Maven
       run: mvn.cmd -B package --file pom.xml
+
+    - name: Debug Maven Properties
+      run: |
+        echo "XML_PATH: $xmlPath"
+        echo "SUITE_XML_FILE: $suiteXmlFile"
+        echo "ENVIRONMENT: $environment"
+        echo "BROWSER: $browser"
+        echo "DEFAULT_TIMEOUT: $defaultTimeout"
+        mvn --version
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
