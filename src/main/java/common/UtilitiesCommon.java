@@ -174,14 +174,19 @@ public class UtilitiesCommon {
 	}
 
 	//Added wait for below methods
-	public static void waitForMenCategoryElement() {
-	    WebDriverWait wait = new WebDriverWait(driver, 60);
+//	public static void waitForMenCategoryElement() {
+//	    WebDriverWait wait = new WebDriverWait(driver, 60);
+//	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
+//	}
+	
+	public static void waitForMenCategoryElement(int waitTimeInSeconds) {
+	    WebDriverWait wait = new WebDriverWait(driver, waitTimeInSeconds);
 	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
 	}
 
 	// Method to click on the element after it becomes visible
 	public static void clickOnMenCategoryElement() {
-	    waitForMenCategoryElement();
+	    waitForMenCategoryElement(90);
 	    driver.findElement(By.cssSelector("ul >.men-cate-top-label")).click();
 	    System.out.println("Element is clickable and working");
 	    }
@@ -425,6 +430,9 @@ public class UtilitiesCommon {
 							+ File.separator + "resources" + File.separator + "TestData" + File.separator
 							+ "TestDataDownload");
 			chromeOptions.setExperimentalOption("prefs", preferences);
+		  //run test with headless mode for git actions
+			//chromeOptions.addArguments("--headless");
+
 			driver = new ChromeDriver(chromeOptions);
 		}
 
