@@ -13,6 +13,10 @@
 		<aspectj.version>1.9.21.1</aspectj.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+            <xmlPath>src/test/resources</xmlPath>
+
+            <suiteXmlFile>LocalTestSuite.xml,RegressionTestSuite.xml,SanityTestSuite.xml</suiteXmlFile>
+
         <environment>QA</environment>
     <browser>chrome</browser>
     <defaultTimeout>30</defaultTimeout>
