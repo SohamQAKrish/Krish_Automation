@@ -170,20 +170,21 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+		wait = new WebDriverWait(driver, 60);
 	}
 
 	//Added wait for below methods
 	public static void waitForMenCategoryElement() {
 	    WebDriverWait wait = new WebDriverWait(driver, 60);
-	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul > .men-cate-top-label")));
+	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
 	}
 
 	// Method to click on the element after it becomes visible
 	public static void clickOnMenCategoryElement() {
 	    waitForMenCategoryElement();
-	    driver.findElement(By.cssSelector("ul > .men-cate-top-label")).click();
-	}
+	    driver.findElement(By.cssSelector("ul >.men-cate-top-label")).click();
+	    System.out.println("Element is clickable and working");
+	    }
 	
 	/**
 	 * This method is used to setup the JavaScript Executor Instance.
