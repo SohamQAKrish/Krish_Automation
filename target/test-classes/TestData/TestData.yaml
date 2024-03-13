@@ -1,0 +1,87 @@
+SanityLoginAndNavigationTest:
+ - testWorkOrdersPageHeaderTitle:
+    WorkOrderHeader: "Work Order Management"
+ - testAssetPageHeaderTitle:
+    AssetHeader: "Asset Management"
+ - testInvoicePageHeaderTitle:
+    InvoicePageHeaderTitle: "Invoice Management"
+ - testInspectionsPageHeaderTitle:
+    InspectionHeader: "Inspection Management"
+ - testPlanningBoardPageHeaderTitle:
+    PlanningBoardHeader: "Planning and Assignment Board"
+ - testPMSPageHeaderTitle:
+    PMManagementHeader: "PM Management"
+ - testRequestManagementPageHeaderTitle:
+    RequestManagementHeader: "Request Management"
+ - testPurchaseOrdersPageHeaderTitle:
+    PurchaseOrdersHeaderTitle: "Purchase Order Management"
+ - testInventoryPageHeaderTitle:
+    InventoryPageHeaderTitle: "Inventory"
+ - testCycleCountsPageHeaderTitle:
+    CycleCountsPageHeaderTitle: "Cycle Counts"
+ - testTransfersPageHeaderTitle:
+    TransfersPageHeaderTitle: "Inventory Transfer Management"
+ - testVendorsPageHeaderTitle:
+    VendorManagementHeaderTitle: "Vendor Management"
+ - testCustomersPageHeaderTitle:
+    CustomersPageHeaderTitle: "Customers Management"
+ - testReportsPageHeaderTitle:
+    ReportsPageHeaderTitle: "Report Management"
+ - testBIPageHeaderTitle:
+    BIPageHeaderTitle: "Welcome To ManagerPlus | Bi"
+ - testSettingsPageHeaderTitle:
+    SettingsPageHeaderTitle: "Settings"
+ - testHomePageHeaderTitle:
+    Header: "Work Order Dashboard"
+ - testOnitSukaPageHeaderTitle:
+    OnitSukaHeader: "Onitsuka Tiger"
+SanityAssetTest:
+ - testCreateAssetForm:
+    SiteData: "Entity A"
+    CategoryData: "BUILDING MAINTENANCE"
+    SubCategoryData: "ALARM SYSTEM"
+    AssetRecordConfirmation: "New asset created successfully"
+SanityPurchaseOrdersTest:
+ - testCreateNewPurchaseOrder:
+    PurchaseOrderToastMessage: "New purchase order created successfully!"
+SanityRequestManagementTest: 
+ - testNewRequestCreation:
+    Text: "Test"
+    NewRequest: "NEW"
+SanityVendorTest:
+ - testCreateVendor:
+    VendorManagementHeaderTitle: "Vendor Management"
+    VendorNameTextFieldValue: "Cybage"
+    VendorEmailIDTextFieldValue: "cybage235@gmail.co"
+    VendorPhoneNumberTextFieldValue: "898745445"
+    VendorNewVendorEmailText: "Email: cybage235@gmail.co"
+    NewVendorCreatedToastMessage: "New Vendor created successfully!"
+SanityCustomersTest:
+ - testCreateCustomerForm:
+    CustomerRecordConfirmation: "New Customer created successfully"
+SanityInvoiceTest:
+ - testCreateInvoice:
+    InvoicePageHeaderTitle: "Invoice Management"
+    PurposeTextFieldValue: "For accounting and tax"
+    InvoiceStatusText: "NEW"
+SanityWorkOrdersTest:
+ - testCreateWorkOrderForm:
+    WorkOrderRecordConfirmation: "NEW"
+SanityInspectionTest:
+ - testCreateInspection:
+    InspectionHeader: "Inspection Management"
+    NewInspectionCreatedToastMessage: "Inspection completed."
+SanityInventoryTest:
+ - testNewPartCreation:
+SanityTransfersManagementTest:
+ - testCreateNewTransfer:
+    TransferToastMessage: "Transfer created successfully"
+RegressionMarketplaceTest:
+ - testVerifyTransferModuleStatus:
+    buttonTextInInstalledState: "INSTALLED"
+SanityOnitsukaLoginAndNavigationTest:
+ - testOnitSukaPageHeaderTitle:
+    OnitSukaHeader: "MAGAZINE SHOPPING BRAND ALL MEN WOMEN KIDS 検索 マイショッピングバッグ MY WISHLIST コンテンツにスキップ 変更"
+ - testOnitSukaMenCategoryNavigation:
+    OnitSukaMenPageTitle: "Men"
+    

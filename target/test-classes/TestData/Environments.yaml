@@ -1,0 +1,20 @@
+QA:
+ ApplicationURL: "https://www.preprod.onitsukatiger.com/jp/ja-jp/"
+ AdminUserName: "admin"
+ AdminPassword: "bG9jYWw="
+PROD:
+ ApplicationURL: "https://twopointpro.managerpluscloud.com/lt/login"
+ AdminUserName: "admin"
+ AdminPassword: "bG9jYWw="
+QA2:
+ ApplicationURL: "https://qacybagemanual.managerpluscloud.com/lt/login"
+ AdminUserName: "admin"
+ AdminPassword: "YWRtaW4="
+QA3:
+ ApplicationURL: "https://qaautowo.managerpluscloud.com/lt/login"
+ AdminUserName: "admin"
+ AdminPassword: "TG9jYWwxMjM="
+TESTRAIL:
+ URL: "https://teem.testrail.net"
+ Username: "selenium.ioffice@iofficecorp.com"
+ Password: "UWFASW9mZmljZTIwMjE="
