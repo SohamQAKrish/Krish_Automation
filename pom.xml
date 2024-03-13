@@ -170,6 +170,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <propertyName>${defaultTimeout}</propertyName>
             </systemPropertyVariables>
+
                 </configuration>
             </plugin>
             <plugin>
