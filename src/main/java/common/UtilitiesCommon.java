@@ -175,7 +175,7 @@ public class UtilitiesCommon {
 
 	//Added wait for below methods
 	public static void waitForMenCategoryElement() {
-	    WebDriverWait wait = new WebDriverWait(driver, waitTime);
+	    WebDriverWait wait = new WebDriverWait(driver, 60);
 	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul > .men-cate-top-label")));
 	}
 
