@@ -170,6 +170,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <propertyName>${defaultTimeout}</propertyName>
             </systemPropertyVariables>
+                <reportsDirectory>C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\target\surefire-reports</reportsDirectory>
 
                 </configuration>
             </plugin>
