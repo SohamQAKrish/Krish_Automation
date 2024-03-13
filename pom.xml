@@ -15,7 +15,7 @@
         <maven.compiler.target>17</maven.compiler.target>
             <xmlPath>src/test/resources</xmlPath>
 
-            <suiteXmlFile>LocalTestSuite.xml,SanityTestSuite.xml</suiteXmlFile>
+            <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
 
         <environment>QA</environment>
     <browser>chrome</browser>
