@@ -167,10 +167,10 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, 60);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+	    wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
 	//Added wait for below methods
@@ -486,7 +486,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		setupWebdriverWait(60);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
