@@ -37,7 +37,6 @@ public class SanityOnitsukaLoginAndNavigationTest {
 	public void testOnitSukaMenCategoryNavigation() {
 		LoginPage.login("AdminUserName", "AdminPassword");
 		UtilitiesCommon.setupWebdriverWait(120); // Increase wait time to 60 seconds
-
 		OnitsukaPage.verifyOnitSukaPageMenCategory();
 	}
 }
