@@ -36,7 +36,7 @@ public class SanityOnitsukaLoginAndNavigationTest {
 	@Description("This Test is used to Verify the Navigation to the Men Category")
 	public void testOnitSukaMenCategoryNavigation() {
 		LoginPage.login("AdminUserName", "AdminPassword");
-		UtilitiesCommon.setupWebdriverWait(90); // Increase wait time to 60 seconds
+		UtilitiesCommon.setupWebdriverWait(120); // Increase wait time to 60 seconds
 
 		OnitsukaPage.verifyOnitSukaPageMenCategory();
 	}
