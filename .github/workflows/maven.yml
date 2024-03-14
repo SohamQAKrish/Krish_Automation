@@ -27,9 +27,3 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '17'
-
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
-         
-    - name: Build with Maven
-      run: mvn -B clean test
