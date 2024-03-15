@@ -42,7 +42,8 @@ jobs:
     
     - name: Generate Allure reports
       run: |
-        allure generate --clean
+        $allureBinary = "${{ github.workspace }}\allure\bin\allure.bat"
+        & $allureBinary generate --clean
         mv allure-report $GITHUB_WORKSPACE/allure-results
               
     - name: Upload Allure report
