@@ -28,7 +28,7 @@ jobs:
 
         - name: Generate Allure reports
           run: |
-            "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean "C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results"
+            & "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean "C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results"
             move $GITHUB_WORKSPACE\allure-results $GITHUB_WORKSPACE\report
 
         - name: Upload Allure Results
