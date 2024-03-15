@@ -8,45 +8,31 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
-    env:
-      XML_PATH: src/test/resources
-      SUITE_XML_FILE: LocalTestSuite.xml
-      ENVIRONMENT: QA
-      BROWSER: chrome
-      DEFAULT_TIMEOUT: 30
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
+        - name: Checkout code
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}
 
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '17'
+        - name: Set up JDK
+          uses: actions/setup-java@v2
+          with:
+            distribution: 'adopt'
+            java-version: '17'
 
-    - name: Run Your TestNG Tests
-      run: |
-          # Replace this command with your TestNG test execution command
-          # Example: java -cp path/to/your/testng.jar:path/to/your/tests.jar org.testng.TestNG path/to/your/testng.xml
-          echo "Running TestNG test"
-          
-    - name: Install Allure Command Line
-      run: |
-            Invoke-WebRequest -Uri 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.27.0/allure-commandline-2.27.0.zip' -OutFile 'allure-commandline-2.27.0.zip'
+        - name: Install Allure Command Line
+          run: |
+           Invoke-WebRequest -Uri 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.27.0/allure-commandline-2.27.0.zip' -OutFile 'allure-commandline-2.27.0.zip'
             Expand-Archive -Path 'allure-commandline-2.27.0.zip' -DestinationPath 'allure'
-            $env:Path += ";${{ github.workspace }}\allure\bin"
-    
-    - name: Generate Allure reports
-      run: |
-        "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean
-        move allure-results $GITHUB_WORKSPACE\allure-results
-          
-    - name: Upload Allure report
-      uses: actions/upload-artifact@v2
-      with:
-              name: allure-report
-              path: $GITHUB_WORKSPACE/allure-results
+            $env:Path += ";${{ github.workspace }}/allure/bin"
+
+        - name: Generate Allure reports
+          run: |
+            "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean
+             move allure-results $GITHUB_WORKSPACE\allure-results
+
+        - name: Upload Allure Results
+          uses: actions/upload-artifact@v2
+          with:
+            name: allure-report
+            path: $GITHUB_WORKSPACE/allure-results
