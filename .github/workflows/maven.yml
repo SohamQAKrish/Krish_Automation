@@ -31,11 +31,12 @@ jobs:
     # Check if the 'allure-results' folder exists in the development branch
     - name: Check for existing Allure results
       run: |
-        if exist allure-results (
-        echo Allure results found in development branch.
-        xcopy allure-results $GITHUB_WORKSPACE\allure-results\ /e /i /h /y
-        ) else (
+        dir allure-results > nul 2>&1
+        if ERRORLEVEL 1 (
         echo No Allure results found in development branch.
+         ) else (
+         echo Allure results found in development branch.
+         xcopy allure-results $GITHUB_WORKSPACE\allure-results\ /s /e /y
         )
 
 
