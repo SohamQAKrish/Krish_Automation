@@ -34,6 +34,12 @@ jobs:
           # Example: java -cp path/to/your/testng.jar:path/to/your/tests.jar org.testng.TestNG path/to/your/testng.xml
           echo "Running TestNG tests"
           
+    - name: Install Allure Command Line
+      run: |
+            wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.27.0/allure-commandline-2.27.0.zip
+            mkdir allure
+            unzip allure-commandline-2.27.0.zip -d allure
+            echo "::add-path::$GITHUB_WORKSPACE/allure/bin"
     - name: Generate Allure reports
       run: |
               allure generate --clean
