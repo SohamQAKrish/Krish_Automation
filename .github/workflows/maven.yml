@@ -28,14 +28,15 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
+    # Add a step to copy the existing Allure report from your local machine to the GitHub Actions workspace
     - name: Copy Allure report
       run: |
-       New-Item -ItemType Directory -Path $env:GITHUB_WORKSPACE\allure-results -Force
-       Copy-Item -Path "C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results\*" -Destination $env:GITHUB_WORKSPACE\allure-results\ -Recurse -Force
+        mkdir $GITHUB_WORKSPACE/allure-report
+        cp -r C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results $GITHUB_WORKSPACE/allure-report
 
-
+    # Upload the copied Allure report as an artifact
     - name: Upload Allure report
       uses: actions/upload-artifact@v2
       with:
         name: allure-report
-        path: allure-report
+        path: $GITHUB_WORKSPACE/allure-report
