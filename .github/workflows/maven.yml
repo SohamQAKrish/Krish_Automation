@@ -43,9 +43,8 @@ jobs:
     - name: Generate Allure reports
       run: |
         allure generate --clean
-        mv allure-results $GITHUB_WORKSPACE/allure-results
-
-              
+        move allure-results %GITHUB_WORKSPACE%\allure-results
+          
     - name: Upload Allure report
       uses: actions/upload-artifact@v2
       with:
