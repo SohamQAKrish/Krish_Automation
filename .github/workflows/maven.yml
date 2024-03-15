@@ -28,13 +28,22 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
-    # Add a step to copy the existing Allure report from your local machine to the GitHub Actions workspace
-    - name: Copy Allure report
+    # Check if the 'allure-results' folder exists in the development branch
+    - name: Check for existing Allure results
       run: |
-        mkdir $GITHUB_WORKSPACE/allure-report
-        cp -r C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results $GITHUB_WORKSPACE/allure-report
+        if [ -d "allure-results" ]; then
+          echo "Allure results found in development branch."
+          cp -r allure-results $GITHUB_WORKSPACE/allure-results
+        else
+          echo "No Allure results found in development branch."
+        fi
 
-    # Upload the copied Allure report as an artifact
+    # Generate Allure report from existing or copied results
+    - name: Generate Allure report
+      run: |
+        allure generate $GITHUB_WORKSPACE/allure-results -o $GITHUB_WORKSPACE/allure-report
+
+    # Upload the generated Allure report as an artifact
     - name: Upload Allure report
       uses: actions/upload-artifact@v2
       with:
