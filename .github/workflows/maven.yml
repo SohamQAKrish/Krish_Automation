@@ -30,10 +30,10 @@ jobs:
 
     - name: Copy Allure report
       run: |
-       cp -r C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results/* $GITHUB_WORKSPACE/allure-results/
+       New-Item -ItemType Directory -Path $env:GITHUB_WORKSPACE\allure-results -Force
+       Copy-Item -Path "C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results\*" -Destination $env:GITHUB_WORKSPACE\allure-results\ -Recurse -Force
 
 
-    # Upload Allure report artifacts
     - name: Upload Allure report
       uses: actions/upload-artifact@v2
       with:
