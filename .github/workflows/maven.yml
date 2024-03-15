@@ -20,6 +20,10 @@ jobs:
             distribution: 'adopt'
             java-version: '17'
 
+        - name: Run Tests
+          run: |
+            mvn clean 
+
         - name: Install Allure Command Line
           run: |
            Invoke-WebRequest -Uri 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.27.0/allure-commandline-2.27.0.zip' -OutFile 'allure-commandline-2.27.0.zip'
