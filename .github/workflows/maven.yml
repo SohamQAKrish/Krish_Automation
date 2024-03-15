@@ -29,7 +29,7 @@ jobs:
         - name: Generate Allure reports
           run: |
             "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean
-             move allure-results $GITHUB_WORKSPACE\allure-results
+            move $GITHUB_WORKSPACE\allure-results $GITHUB_WORKSPACE\reports
 
         - name: Upload Allure Results
           uses: actions/upload-artifact@v2
