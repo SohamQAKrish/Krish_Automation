@@ -27,3 +27,14 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '17'
+
+    - name: Copy Allure report
+      run: |
+        cp -r ./allure-report $GITHUB_WORKSPACE/allure-report
+
+    # Upload Allure report artifacts
+    - name: Upload Allure report
+      uses: actions/upload-artifact@v2
+      with:
+        name: allure-report
+        path: allure-report
