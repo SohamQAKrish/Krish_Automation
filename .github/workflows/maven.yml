@@ -32,11 +32,12 @@ jobs:
     - name: Check for existing Allure results
       run: |
         if exist allure-results (
-         echo Allure results found in development branch.
-         xcopy allure-results $GITHUB_WORKSPACE\allure-results\ /e /i /h /y
-         ) else (
+        echo Allure results found in development branch.
+        xcopy allure-results $GITHUB_WORKSPACE\allure-results\ /e /i /h /y
+        ) else (
         echo No Allure results found in development branch.
-         )
+        )
+
 
     # Generate Allure report from existing or copied results
     - name: Generate Allure report
