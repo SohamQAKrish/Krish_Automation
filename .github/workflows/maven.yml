@@ -30,7 +30,8 @@ jobs:
 
     - name: Copy Allure report
       run: |
-        cp -r ./allure-report $GITHUB_WORKSPACE/allure-report
+       cp -r C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results $GITHUB_WORKSPACE/allure-results
+
 
     # Upload Allure report artifacts
     - name: Upload Allure report
