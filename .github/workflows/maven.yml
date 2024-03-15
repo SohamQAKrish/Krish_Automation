@@ -28,11 +28,16 @@ jobs:
 
         - name: Generate Allure reports
           run: |
-            & "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean "C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results"
-            move $GITHUB_WORKSPACE\allure-results $GITHUB_WORKSPACE\report
+            "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate --clean
+            move allure-results $GITHUB_WORKSPACE\allure-results
 
-        - name: Upload Allure Results
+        - name: Upload Allure report
           uses: actions/upload-artifact@v2
           with:
-            name: allure-report
-            path: $GITHUB_WORKSPACE/allure-results
+              name: allure-report
+              path: $GITHUB_WORKSPACE/allure-results
+
+        - name: Display Allure report link
+          if: success()
+          run: |
+            Write-Host "Allure report: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
