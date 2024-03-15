@@ -32,22 +32,21 @@ jobs:
     - name: Check for existing Allure results
       run: |
         dir allure-results > nul 2>&1
-        if ERRORLEVEL 1 (
+        if %ERRORLEVEL% NEQ 0 (
         echo No Allure results found in development branch.
          ) else (
-         echo Allure results found in development branch.
-         xcopy allure-results $GITHUB_WORKSPACE\allure-results\ /s /e /y
-        )
+        echo Allure results found in development branch.
+        xcopy allure-results $GITHUB_WORKSPACE\allure-results\ /s /e /y
 
 
     # Generate Allure report from existing or copied results
     - name: Generate Allure report
       run: |
-        allure generate $GITHUB_WORKSPACE/allure-results -o $GITHUB_WORKSPACE/allure-report
+        allure generate $GITHUB_WORKSPACE/allure-results -o $GITHUB_WORKSPACE/allure-results
 
     # Upload the generated Allure report as an artifact
     - name: Upload Allure report
       uses: actions/upload-artifact@v2
       with:
         name: allure-report
-        path: $GITHUB_WORKSPACE/allure-report
+        path: $GITHUB_WORKSPACE/allure-results
