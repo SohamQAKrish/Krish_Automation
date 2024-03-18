@@ -35,4 +35,4 @@ jobs:
       - name: Allure report link
         if: success()
         run: |
-          Write-Host "Allure report: https://github.com/${GITHUB_REPOSITORY}/tree/development/allure-results"
+          Write-Host "Allure report: https://github.com/KashyapDave95/Krish_Automation/tree/development/allure-results"
