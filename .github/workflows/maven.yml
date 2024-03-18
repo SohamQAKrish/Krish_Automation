@@ -32,3 +32,7 @@ jobs:
           name: allure-report
           path: C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results
 
+      - name: Display Allure report link
+        if: success()
+        run: |
+            Write-Host "Allure report: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

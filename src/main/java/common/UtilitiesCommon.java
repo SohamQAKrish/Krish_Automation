@@ -179,17 +179,17 @@ public class UtilitiesCommon {
 //	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
 //	}
 	
-	public static void waitForMenCategoryElement(int waitTimeInSeconds) {
-	    WebDriverWait wait = new WebDriverWait(driver, waitTimeInSeconds);
-	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
-	}
-
-	// Method to click on the element after it becomes visible
-	public static void clickOnMenCategoryElement() {
-	    waitForMenCategoryElement(90);
-	    driver.findElement(By.cssSelector("ul >.men-cate-top-label")).click();
-	    System.out.println("Element is clickable and working");
-	    }
+//	public static void waitForMenCategoryElement(int waitTimeInSeconds) {
+//	    WebDriverWait wait = new WebDriverWait(driver, waitTimeInSeconds);
+//	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
+//	}
+//
+//	// Method to click on the element after it becomes visible
+//	public static void clickOnMennCategoryElement() {
+//		waitForMenCategoryElement(60);
+//	    driver.findElement(By.cssSelector("ul >.men-cate-top-label")).click();
+//	    System.out.println("Element is clickable and working");
+//	    }
 	
 	/**
 	 * This method is used to setup the JavaScript Executor Instance.
