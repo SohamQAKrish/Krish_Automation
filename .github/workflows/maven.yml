@@ -35,4 +35,4 @@ jobs:
       - name: Display Allure report link
         if: success()
         run: |
-            Write-Host "Allure report: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          Write-Host "Allure report: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${GITHUB_REF}/allure-results"
