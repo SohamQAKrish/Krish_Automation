@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          ref: development  # Checkout the development branch
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -35,4 +35,4 @@ jobs:
       - name: Allure report link
         if: success()
         run: |
-          Write-Host "Allure report: https://github.com/KashyapDave95/Krish_Automation/tree/development/allure-results"
+          Write-Host "Allure report: https://github.com/${{ github.repository }}/tree/${{ github.ref }}/allure-results"
