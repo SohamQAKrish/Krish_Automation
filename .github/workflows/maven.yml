@@ -43,4 +43,4 @@ jobs:
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "::set-output name=allure_html_report_link::https://KashyapDave95.github.io/Krish_Automation/allure-results/index.html"
+         echo "::set-output name=allure_html_report_link::https://github.com/kashyapdave95/Krish_Automation/tree/development/allure-results/allure-report-html/index.html"
