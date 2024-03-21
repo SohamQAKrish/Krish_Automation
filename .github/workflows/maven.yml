@@ -21,11 +21,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Install Allure CLI
-        run: |
-          choco install allure -y
-          refreshenv  # Refresh environment variables after installation
-
       - name: Run Tests and Generate Allure Report
         run: |
           mvn clean test
