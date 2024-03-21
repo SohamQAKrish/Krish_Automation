@@ -21,16 +21,15 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Install Allure CLI
+        run: |
+          choco install allure -y
+          refreshenv  # Refresh environment variables after installation
+
       - name: Run Tests and Generate Allure Report
         run: |
           mvn clean test
           mvn allure:report
-
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-report
-          path: C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\allure-results
 
       - name: Convert Allure Report to HTML
         run: |
@@ -43,7 +42,7 @@ jobs:
           name: allure-html-report
           path: allure-results
 
-      - name: Allure HTML report link
+      - name: Set Allure HTML report link
         if: success()
         run: |
-          Write-Host "Allure HTML report: https://KashyapDave95.github.io/Krish_Automation/allure-results/index.html"
+          echo "::set-output name=allure_html_report_link::https://KashyapDave95.github.io/Krish_Automation/allure-results/index.html"
