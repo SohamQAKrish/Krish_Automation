@@ -30,8 +30,7 @@ jobs:
           mvn allure:report
 
       - name: Convert Allure Report to HTML
-        run: |
-          cmd.exe /C "C:\Users\kashyap.dave\Desktop\Automation\allure-2.27.0\bin\allure.bat" generate allure-results --clean -o allure-html-report
+        run: allure generate allure-results --clean -o allure-html-report
 
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
