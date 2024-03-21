@@ -21,6 +21,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
       - name: Run Tests and Generate Allure Report
         run: |
           mvn clean test
