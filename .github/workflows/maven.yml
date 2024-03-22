@@ -31,13 +31,13 @@ jobs:
 
       - name: Convert Allure Report to HTML
         run: |
-          allure generate allure-results --clean -o allure-results
+          allure generate development/allure-results --clean -o development/allure-results/allure-html-report
 
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
           name: allure-html-report
-          path: allure-results
+          path: development/allure-results
 
       - name: Set Allure HTML report link 
         if: success()
