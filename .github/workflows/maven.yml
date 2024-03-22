@@ -24,6 +24,9 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline
 
+      - name: Create allure-results directory
+        run: mkdir -p allure-results
+
       - name: Run Tests and Generate Allure Report
         run: |
           mvn clean test
@@ -31,13 +34,13 @@ jobs:
 
       - name: Convert Allure Report to HTML
         run: |
-          allure generate target/site/allure-maven-plugin --clean -o development/allure-results/allure-html-report
+          allure generate allure-results --clean -o allure-html-report
 
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
           name: allure-html-report
-          path: target/site/allure-maven-plugin
+          path: allure-html-report
 
       - name: Set Allure HTML report link 
         if: success()
