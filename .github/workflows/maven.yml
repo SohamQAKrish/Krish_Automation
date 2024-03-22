@@ -25,7 +25,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Clear allure-results directory
-        run: rmdir /s /q allure-results
+        run: Remove-Item -Recurse -Force allure-results
 
       - name: Run Tests and Generate Allure Report
         run: |
