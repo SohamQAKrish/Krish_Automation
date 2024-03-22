@@ -25,7 +25,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Clear allure-results directory
-        run: Remove-Item -Recurse -Force allure-results\*
+        run: del /q allure-results\*
 
       - name: Run Tests and Generate Allure Report
         run: |
@@ -34,15 +34,15 @@ jobs:
 
       - name: Convert Allure Report to HTML
         run: |
-          allure generate allure-results --clean -o allure-html-report
+          allure generate allure-results --clean -o allure-results
 
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
           name: allure-html-report
-          path: allure-html-report
+          path: allure-results
 
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Krish_Automation/tree/development/allure-results"
+          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Krish_Automation/actions/runs/${{ github.run_id }}/artifacts/allure-html-report/index.html"
