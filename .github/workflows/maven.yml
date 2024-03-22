@@ -31,15 +31,15 @@ jobs:
 
       - name: Convert Allure Report to HTML
         run: |
-          allure generate development/allure-results --clean -o development/allure-results/allure-html-report
+          allure generate target/site/allure-maven-plugin --clean -o development/allure-results/allure-html-report
 
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
           name: allure-html-report
-          path: development/allure-results
+          path: target/site/allure-maven-plugin
 
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "::set-output name=allure_html_report_link::https://github.com/KashyapDave95/Krish_Automation/actions/runs/$GITHUB_RUN_ID/artifacts/allure-html-report"
+          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Krish_Automation/tree/development/allure-results"
