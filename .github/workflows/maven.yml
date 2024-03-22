@@ -26,8 +26,9 @@ jobs:
 
       - name: Remove allure-results directory
         run: |
-          del /q allure-results\*
-          mkdir allure-results
+          if exist allure-results (
+            rmdir /s /q allure-results
+          )
 
       - name: Run Tests and Generate Allure Report
         run: |
