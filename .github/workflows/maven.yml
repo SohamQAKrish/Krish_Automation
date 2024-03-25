@@ -21,7 +21,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Install WebDriverManager
+      - name: Installation WebDriverManager
         run: |
           mvn dependency:get -Dartifact=io.github.bonigarcia:webdrivermanager:5.5.3
 
