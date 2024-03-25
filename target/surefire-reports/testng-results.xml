@@ -2,12 +2,12 @@
 <testng-results ignored="1" total="2" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-03-15T17:05:19 IST" name="Local Test Suite" finished-at="2024-03-15T17:06:12 IST" duration-ms="53146">
+  <suite started-at="2024-03-23T10:37:14 IST" name="Local Test Suite" finished-at="2024-03-23T10:38:17 IST" duration-ms="62255">
     <groups>
     </groups>
-    <test started-at="2024-03-15T17:05:19 IST" name="Local Tests" finished-at="2024-03-15T17:06:12 IST" duration-ms="53146">
+    <test started-at="2024-03-23T10:37:14 IST" name="Local Tests" finished-at="2024-03-23T10:38:17 IST" duration-ms="62255">
       <class name="sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest">
-        <test-method signature="testOnitSukaMenCategoryNavigation()[pri:0, instance:sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest@72ab05ed]" started-at="2024-03-15T17:05:23 IST" name="testOnitSukaMenCategoryNavigation" finished-at="2024-03-15T17:05:54 IST" duration-ms="31012" status="PASS">
+        <test-method signature="testOnitSukaMenCategoryNavigation()[pri:0, instance:sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest@27e32fe4]" started-at="2024-03-23T10:37:19 IST" name="testOnitSukaMenCategoryNavigation" finished-at="2024-03-23T10:37:47 IST" duration-ms="28053" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testOnitSukaMenCategoryNavigation -->
