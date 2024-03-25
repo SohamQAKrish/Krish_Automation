@@ -178,12 +178,12 @@
             </plugin>
              <!-- Add Allure plugin -->
         <plugin>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-maven</artifactId>
-            <version>2.12.0</version>
-            <configuration>
-                <reportVersion>2.12.0</reportVersion>
-            </configuration>
+             <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+        		<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+                </configuration>
         </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
