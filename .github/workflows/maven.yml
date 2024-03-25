@@ -21,6 +21,10 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Install WebDriverManager
+        run: |
+          mvn dependency:get -Dartifact=io.github.bonigarcia:webdrivermanager:5.5.3
+
       - name: Install Allure CLI
         run: npm install -g allure-commandline
 
@@ -38,4 +42,4 @@ jobs:
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Krish_Automation/tree/development/allure-results"
+          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Krish_Automation/tree/development/allure-report-html"
