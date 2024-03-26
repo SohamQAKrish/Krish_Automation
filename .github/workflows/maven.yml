@@ -15,12 +15,6 @@ jobs:
         with:
           ref: development  # Checkout the development branch
 
-          # Add a debug step to print the values of ${xmlPath} and ${suiteXmlFile}
-      - name: Debug Property Values
-        run: |
-            mvn help:evaluate -Dexpression=xmlPath
-            mvn help:evaluate -Dexpression=suiteXmlFile
-
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
@@ -42,13 +36,3 @@ jobs:
         with:
           name: allure-html-report-dev
           path: allure-report-html
-
-      - name: Checkout main code
-        uses: actions/checkout@v2
-        with:
-          ref: main  # Checkout the main branch
-
-      - name: Set Allure HTML report link 
-        if: success()
-        run: |
-          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Krish_Automation/tree/development/allure-report-html"
