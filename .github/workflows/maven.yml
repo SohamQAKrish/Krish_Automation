@@ -3,14 +3,14 @@ name: CI/CD
 on:
   push:
     branches:
-      - main
+      - development
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout development code
         uses: actions/checkout@v2
         with:
           ref: development  # Checkout the development branch
@@ -30,16 +30,32 @@ jobs:
           # For example:
           java -jar setup-webdriver.jar
 
-      - name: Run Test and Generate Allure Report
+      - name: Run Test and Generate Allure Report for Development Branch
         run: |
           mvn clean test
           allure generate allure-results --clean -o allure-report-html
 
-      - name: Upload HTML Allure Report
+      - name: Upload HTML Allure Report for Development Branch
         uses: actions/upload-artifact@v2
         with:
-          name: allure-html-report
+          name: allure-html-report-dev
           path: allure-report-html
+
+      - name: Checkout main code
+        uses: actions/checkout@v2
+        with:
+          ref: main  # Checkout the main branch
+
+      - name: Run Test and Generate Allure Report for Main Branch
+        run: |
+          mvn clean test
+          allure generate allure-results --clean -o allure-report-html-main
+
+      - name: Upload HTML Allure Report for Main Branch
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-html-report-main
+          path: allure-report-html-main
 
       - name: Set Allure HTML report link 
         if: success()
