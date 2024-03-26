@@ -26,9 +26,9 @@ jobs:
 
       - name: Setup WebDriver
         run: |
-          # Execute a script or command to set up WebDriver
-          # For example:
-          java -jar setup-webdriver.jar
+          # Use WebDriverManager to setup WebDriver binaries
+          mvn dependency:get -Dartifact=io.github.bonigarcia:webdrivermanager:5.5.3 -Ddest=.
+          java -jar "webdrivermanager-5.5.3.jar"
 
       - name: Run Test and Generate Allure Report for Development Branch
         run: |
