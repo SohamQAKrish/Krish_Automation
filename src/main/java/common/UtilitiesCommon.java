@@ -520,7 +520,7 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void applicationLogout() {
-		navigateToPage("https://www.onitsukatiger.com/jp/ja-jp/");
+	//	navigateToPage("https://www.onitsukatiger.com/jp/ja-jp/");
 		// HomePage.logout();
 	}
 
