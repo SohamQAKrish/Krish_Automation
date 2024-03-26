@@ -23,3 +23,6 @@
 hs_err_pid*
 replay_pid*
 
+# Ignore test suite files
+TEST-TestSuite.xml
+TestSuite.txt

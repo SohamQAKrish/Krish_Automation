@@ -172,7 +172,7 @@
                     <!--suppress UnresolvedMavenProperty -->
                     <propertyName>${defaultTimeout}</propertyName>
                 </systemPropertyVariables>
-                <reportsDirectory>target/surefire-reports</reportsDirectory>
+                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
             </configuration>
         </plugin>
         <!-- Add Allure plugin -->
