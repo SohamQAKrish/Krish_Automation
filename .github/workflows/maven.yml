@@ -24,12 +24,6 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline
 
-      - name: Setup WebDriver
-        run: |
-          # Use WebDriverManager to setup WebDriver binaries
-          mvn dependency:get -Dartifact=io.github.bonigarcia:webdrivermanager:5.5.3 -Ddest=.
-          java -jar "webdrivermanager-5.5.3.jar"
-
       - name: Run Test and Generate Allure Report for Development Branch
         run: |
           mvn clean test
