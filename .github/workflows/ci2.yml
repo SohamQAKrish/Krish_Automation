@@ -31,7 +31,9 @@ jobs:
           distribution: 'adopt'
 
       - name: Building Maven Project
-        run: mvn clean test-compile
+        run: |
+          cd $GITHUB_WORKSPACE
+          mvn clean test-compile
 
   test:
     runs-on: ubuntu-latest
@@ -42,11 +44,23 @@ jobs:
         ports:
           - "4444:4444"
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Set up Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          maven-version: '3.8.1'
+          distribution: 'adopt'
 
       - name: Run Selenium Tests
-        run: mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
+        run: |
+          cd $GITHUB_WORKSPACE
+          mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
 
   generate-report:
     runs-on: ubuntu-latest
