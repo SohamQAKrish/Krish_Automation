@@ -31,9 +31,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Building Maven Project
-        run: |
-          cd $GITHUB_WORKSPACE
-          mvn clean test-compile
+        run: mvn clean test-compile --file ${{ github.workspace }}/pom.xml
 
   test:
     runs-on: ubuntu-latest
@@ -58,9 +56,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Run Selenium Tests
-        run: |
-          cd $GITHUB_WORKSPACE
-          mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
+        run: mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml --file ${{ github.workspace }}/pom.xml
 
   generate-report:
     runs-on: ubuntu-latest
