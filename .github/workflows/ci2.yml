@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+          if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
             mvn clean test -DtestSuiteFile=sanitytestsuite.xml
           else
             mvn clean test -DtestSuiteFile=localtestsuite.xml
