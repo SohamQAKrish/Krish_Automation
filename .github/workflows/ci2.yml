@@ -21,12 +21,14 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'adopt'
 
       - name: Set up Maven
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           maven-version: '3.8.1'
+          distribution: 'adopt'
 
       - name: Building Maven Project
         run: mvn -f pom.xml clean test-compile
