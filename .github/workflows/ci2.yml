@@ -24,12 +24,14 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'adopt'
 
       - name: Set up Maven
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           maven-version: '3.8.1'
+          distribution: 'adopt'
 
       - name: Change directory to project root
         run: cd Krish_Automation  # Replace 'Krish_Automation' with the name of your project directory
