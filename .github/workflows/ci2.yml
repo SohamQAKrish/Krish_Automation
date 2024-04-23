@@ -1,82 +1,72 @@
-name: CI
+version: "1.0"
+# Stages can help you organize your steps in stages
+stages:
+  - "clone"
+  - "build"
+  - "test"
+  - "allure-reports"
 
-on:
-  push:
-    branches:
-      - main
-      - '*'
-
-jobs:
+steps:
   clone:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    title: "Cloning repository"
+    type: "git-clone"
+    repo: "SohamQAKrish/Krish_Automation"
+    revision: "${{CF_BRANCH}}"
+    stage: "clone"
 
   build:
-    runs-on: ubuntu-latest
-    needs: clone
-    steps:
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
+    title: "Building Maven Project"
+    type: "freestyle"
+    working_directory: "${{clone}}"
+    stage: "build"
+    arguments:
+      command: "mvn clean test-compile"
 
-      - name: Set up Maven
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          maven-version: '3.8.1'
-          distribution: 'adopt'
+  Composition:
+    title: "Run Selenium Tests"
+    type: "composition"
+    arguments:
+      composition:
+        version: '3'
+        services:
+          hub:
+            image: selenium/hub:3.141.59
+            ports:
+              - "4444:4444"
+            environment:
+              - HUB_HOST=hub
+              - GRID_BROWSER_TIMEOUT=3400
+              - GRID_TIMEOUT=3600
+          chrome:
+            image: selenium/node-chrome:3.141.59
+            depends_on:
+              - hub
+            shm_size: '1gb'
+            environment:
+              - HUB_HOST=hub
+              - GRID_BROWSER_TIMEOUT=3400
+              - GRID_TIMEOUT=3600
+            ports:
+              - "5900:5900"
+      composition_candidates:
+        automation_scripts:
+          image: '${{build}}'
+          volumes:
+            - '${{CF_VOLUME_NAME}}:${{CF_VOLUME_PATH}}'
+          depends_on:
+            - chrome
+          environment:
+            - HUB_HOST=hub
+            - GRID_BROWSER_TIMEOUT=3400
+            - GRID_TIMEOUT=3600
+          command: "mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml; pwd; rm -rf /codefresh/volume/allure-results; cp -rf ./allure-results /codefresh/volume/"
+      fail_fast: false
+    stage: "test"
 
-      - name: Building Maven Project
-        run: mvn clean test-compile -f pom.xml
-        working-directory: ${{ github.workspace }}
-
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    services:
-      selenium_hub:
-        image: selenium/hub:3.141.59
-        ports:
-          - "4444:4444"
-    steps:
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Set up Maven
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          maven-version: '3.8.1'
-          distribution: 'adopt'
-
-      - name: Run Selenium Tests
-        run: mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml -f pom.xml
-        working-directory: ${{ github.workspace }}
-
-  generate-report:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Install Allure Commandline
-        run: |
-          sudo apt-add-repository ppa:qameta/allure -y
-          sudo apt-get update
-          sudo apt-get install allure -y
-
-      - name: Generate Test Report
-        run: |
-          allure generate allure-results --clean -o allure-report
-        working-directory: ${{ github.workspace }}
-
-      - name: Publish Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
+  allure-reports:
+    title: "Generate Test Report"
+    type: "freestyle"
+    working_directory: '${{CF_VOLUME_PATH}}/'
+    stage: "allure-reports"
+    image: ""
+    environment: []
