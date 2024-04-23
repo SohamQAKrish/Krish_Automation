@@ -3,8 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - main
-      - '*'
+      - IAT-4
 
 jobs:
   build:
@@ -13,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: IAT-4  # Checkout the IAT-4 branch
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -25,11 +26,7 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-          if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
-            mvn clean test -DtestSuiteFile=sanitytestsuite.xml
-          else
-            mvn clean test -DtestSuiteFile=localtestsuite.xml
-          fi
+          mvn clean test
           mvn allure:report
 
       - name: Convert Allure Report to HTML
@@ -45,4 +42,4 @@ jobs:
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "::set-output name=allure_html_report_link::${{ github.server_url }}/SohamQAKrish/Bateel_Automation/tree/${{ github.ref }}/allure-report-html/index.html"
+          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/Bateel_Automation/tree/IAT-4/allure-results"
