@@ -70,3 +70,9 @@ steps:
     stage: "allure-reports"
     image: ""
     environment: []
+
+on:
+  push:
+    branches:
+      - main
+      - '*'
