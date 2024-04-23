@@ -7,31 +7,22 @@ on:
       - '*'
 
 jobs:
-  clone:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cloning repository
-        uses: actions/checkout@v2
-
   build:
     runs-on: ubuntu-latest
-    needs: clone
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adopt'
 
       - name: Set up Maven
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           maven-version: '3.8.1'
-          distribution: 'adopt'
-
-      - name: Change directory to project root
-        run: cd Krish_Automation/pom.xml
 
       - name: Building Maven Project
         run: mvn -f pom.xml clean test-compile
@@ -45,8 +36,8 @@ jobs:
         ports:
           - "4444:4444"
     steps:
-      - name: Change directory to project root
-        run: cd Krish_Automation/pom.xml
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Run Selenium Tests
         run: mvn -f pom.xml test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
@@ -55,9 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - name: Change directory to project root
-        run: cd Krish_Automation/pom.xml
-
       - name: Install Allure Commandline
         run: |
           sudo apt-add-repository ppa:qameta/allure -y
