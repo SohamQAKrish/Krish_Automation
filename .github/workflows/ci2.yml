@@ -31,7 +31,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Change directory to project root
-        run: cd Krish_Automation
+        run: cd Krish_Automation/pom.xml
 
       - name: Building Maven Project
         run: mvn -f pom.xml clean test-compile
@@ -46,7 +46,7 @@ jobs:
           - "4444:4444"
     steps:
       - name: Change directory to project root
-        run: cd Krish_Automation
+        run: cd Krish_Automation/pom.xml
 
       - name: Run Selenium Tests
         run: mvn -f pom.xml test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
@@ -56,7 +56,7 @@ jobs:
     needs: test
     steps:
       - name: Change directory to project root
-        run: cd Krish_Automation
+        run: cd Krish_Automation/pom.xml
 
       - name: Install Allure Commandline
         run: |
