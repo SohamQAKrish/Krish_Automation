@@ -10,61 +10,37 @@ jobs:
   clone:
     title: "Cloning repository"
     steps:
-      - title: "Cloning repository"
-        type: "git-clone"
-        repo: "SohamQAKrish/Krish_Automation"
-        revision: "${{CF_BRANCH}}"
+      - name: "Cloning repository"
+        uses: actions/checkout@v2
+        with:
+          repository: "SohamQAKrish/Krish_Automation"
+          ref: "${{ github.ref }}"
         stage: "clone"
 
   build:
     title: "Building Maven Project"
     steps:
-      - title: "Building Maven Project"
-        type: "freestyle"
-        working_directory: "${{clone}}"
+      - name: "Building Maven Project"
+        run: mvn clean test-compile
         stage: "build"
-        arguments:
-          command: "mvn clean test-compile"
 
   Composition:
     title: "Run Selenium Tests"
     steps:
-      - title: "Run Selenium Tests"
-        type: "composition"
-        arguments:
-          composition:
-            version: '3'
-            services:
-              hub:
-                image: selenium/hub:3.141.59
-                ports:
-                  - "4444:4444"
-                environment:
-                  - HUB_HOST=hub
-                  - GRID_BROWSER_TIMEOUT=3400
-                  - GRID_TIMEOUT=3600
-              chrome:
-                image: selenium/node-chrome:3.141.59
-                depends_on:
-                  - hub
-                shm_size: '1gb'
-                environment:
-                  - HUB_HOST=hub
-                  - GRID_BROWSER_TIMEOUT=3400
-                  - GRID_TIMEOUT=3600
-                ports:
-                  - "5900:5900"
+      - name: "Run Selenium Tests"
+        run: |
+          mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+          pwd
+          rm -rf /codefresh/volume/allure-results
+          cp -rf ./allure-results /codefresh/volume/
         stage: "test"
 
   allure-reports:
     title: "Generate Test Report"
     steps:
-      - title: "Generate Test Report"
-        type: "freestyle"
-        working_directory: '${{CF_VOLUME_PATH}}/'
+      - name: "Generate Test Report"
+        run: echo "Generate Test Report"
         stage: "allure-reports"
-        image: ""
-        environment: []
 
 # Define event triggers
 on:
