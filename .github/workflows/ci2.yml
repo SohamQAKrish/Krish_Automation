@@ -31,8 +31,8 @@ jobs:
           distribution: 'adopt'
 
       - name: Building Maven Project
-        run: mvn clean test-compile
-        dir: ${{ github.workspace }}
+        run: mvn clean test-compile -f pom.xml
+        working-directory: ${{ github.workspace }}
 
   test:
     runs-on: ubuntu-latest
@@ -57,8 +57,8 @@ jobs:
           distribution: 'adopt'
 
       - name: Run Selenium Tests
-        run: mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
-        dir: ${{ github.workspace }}
+        run: mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml -f pom.xml
+        working-directory: ${{ github.workspace }}
 
   generate-report:
     runs-on: ubuntu-latest
@@ -73,7 +73,7 @@ jobs:
       - name: Generate Test Report
         run: |
           allure generate allure-results --clean -o allure-report
-        dir: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}
 
       - name: Publish Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
