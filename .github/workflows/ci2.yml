@@ -1,50 +1,44 @@
-version: "1.0"
-# Stages can help you organize your steps in stages
-stages:
-  - "clone"
-  - "build"
-  - "test"
-  - "allure-reports"
+name: CI
 
-jobs:
-  clone:
-    title: "Cloning repository"
-    steps:
-      - name: "Cloning repository"
-        uses: actions/checkout@v2
-        with:
-          repository: "SohamQAKrish/Krish_Automation"
-          ref: "${{ github.ref }}"
-        stage: "clone"
-
-  build:
-    title: "Building Maven Project"
-    steps:
-      - name: "Building Maven Project"
-        run: mvn clean test-compile
-        stage: "build"
-
-  Composition:
-    title: "Run Selenium Tests"
-    steps:
-      - name: "Run Selenium Tests"
-        run: |
-          mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
-          pwd
-          rm -rf /codefresh/volume/allure-results
-          cp -rf ./allure-results /codefresh/volume/
-        stage: "test"
-
-  allure-reports:
-    title: "Generate Test Report"
-    steps:
-      - name: "Generate Test Report"
-        run: echo "Generate Test Report"
-        stage: "allure-reports"
-
-# Define event triggers
 on:
   push:
     branches:
       - main
       - '*'
+
+jobs:
+  clone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repository
+        uses: actions/checkout@v2
+
+  build:
+    runs-on: ubuntu-latest
+    needs: clone
+    steps:
+      - name: Building Maven Project
+        run: mvn clean test-compile
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    services:
+      selenium_hub:
+        image: selenium/hub:3.141.59
+        ports:
+          - "4444:4444"
+    steps:
+      - name: Run Selenium Tests
+        run: |
+          mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+          pwd
+          rm -rf /codefresh/volume/allure-results
+          cp -rf ./allure-results /codefresh/volume/
+
+  allure-reports:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Generate Test Report
+        run: echo "Generate Test Report"
