@@ -30,8 +30,11 @@ jobs:
           maven-version: '3.8.1'
           distribution: 'adopt'
 
+      - name: Change directory to project root
+        run: cd Krish_Automation
+
       - name: Building Maven Project
-        run: mvn clean test-compile
+        run: mvn -f pom.xml clean test-compile
 
   test:
     runs-on: ubuntu-latest
@@ -42,13 +45,19 @@ jobs:
         ports:
           - "4444:4444"
     steps:
+      - name: Change directory to project root
+        run: cd Krish_Automation
+
       - name: Run Selenium Tests
-        run: mvn test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
+        run: mvn -f pom.xml test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
 
   generate-report:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - name: Change directory to project root
+        run: cd Krish_Automation
+
       - name: Install Allure Commandline
         run: |
           sudo apt-add-repository ppa:qameta/allure -y
