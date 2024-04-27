@@ -1,0 +1,70 @@
+SanityLoginAndNavigationTest:
+ - testWorkOrdersPageHeaderTitle:
+    WorkOrderHeader: "Work Order Management"
+ - testAssetPageHeaderTitle:
+    AssetHeader: "Asset Management"
+ - testInvoicePageHeaderTitle:
+    InvoicePageHeaderTitle: "Invoice Management"
+ - testInspectionsPageHeaderTitle:
+    InspectionHeader: "Inspection Management"
+ - testPlanningBoardPageHeaderTitle:
+    PlanningBoardHeader: "Planning and Assignment Board"
+ - testPMSPageHeaderTitle:
+    PMManagementHeader: "PM Management"
+ - testRequestManagementPageHeaderTitle:
+    RequestManagementHeader: "Request Management"
+ - testPurchaseOrdersPageHeaderTitle:
+    PurchaseOrdersHeaderTitle: "Purchase Order Management"
+ - testInventoryPageHeaderTitle:
+    InventoryPageHeaderTitle: "Inventory"
+ - testCycleCountsPageHeaderTitle:
+    CycleCountsPageHeaderTitle: "Cycle Counts"
+ - testTransfersPageHeaderTitle:
+    TransfersPageHeaderTitle: "Inventory Transfer Management"
+ - testVendorsPageHeaderTitle:
+    VendorManagementHeaderTitle: "Vendor Management"
+ - testCustomersPageHeaderTitle:
+    CustomersPageHeaderTitle: "Customers Management"
+ - testReportsPageHeaderTitle:
+    ReportsPageHeaderTitle: "Report Management"
+ - testBIPageHeaderTitle:
+    BIPageHeaderTitle: "Welcome To ManagerPlus | Bi"
+ - testSettingsPageHeaderTitle:
+    SettingsPageHeaderTitle: "Settings"
+ - testHomePageHeaderTitle:
+    Header: "Work Order Dashboard"
+SanityAssetTest:
+ - testCreateAssetForm:
+    SiteData: "Entity A"
+    CategoryData: "BUILDING MAINTENANCE"
+    SubCategoryData: "ALARM SYSTEM"
+    AssetRecordConfirmation: "New asset created successfully"
+SanityPurchaseOrdersTest:
+ - testCreateNewPurchaseOrder:
+    PurchaseOrderToastMessage: "New purchase order created successfully!"
+SanityRequestManagementTest:
+ - testNewRequestCreation:
+    Text: "Test"
+    NewRequest: "NEW"
+SanityVendorTest:
+ - testCreateVendor:
+    VendorManagementHeaderTitle: "Vendor Management"
+    VendorNameTextFieldValue: "Cybage"
+    VendorEmailIDTextFieldValue: "cybage235@gmail.co"
+    VendorPhoneNumberTextFieldValue: "898745445"
+    VendorNewVendorEmailText: "Email: cybage235@gmail.co"
+    NewVendorCreatedToastMessage: "New Vendor created successfully!"
+SanityCustomersTest:
+ - testCreateCustomerForm:
+    CustomerRecordConfirmation: "New Customer created successfully"
+<<<<<<< HEAD
+SanityWorkOrdersTest:
+ - testCreateWorkOrderForm:
+    WorkOrderRecordConfirmation: "NEW"
+=======
+SanityInvoiceTest:
+ - testCreateInvoice:
+    InvoicePageHeaderTitle: "Invoice Management"
+    PurposeTextFieldValue: "For accounting and tax"
+    InvoiceStatusText: "NEW"
+>>>>>>> bb535b372f45f7571581db8e2fd5a9eb77883e58

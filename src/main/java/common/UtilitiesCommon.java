@@ -167,12 +167,30 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+	    wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
+	//Added wait for below methods
+//	public static void waitForMenCategoryElement() {
+//	    WebDriverWait wait = new WebDriverWait(driver, 60);
+//	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
+//	}
+	
+//	public static void waitForMenCategoryElement(int waitTimeInSeconds) {
+//	    WebDriverWait wait = new WebDriverWait(driver, waitTimeInSeconds);
+//	    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul >.men-cate-top-label")));
+//	}
+//
+//	// Method to click on the element after it becomes visible
+//	public static void clickOnMennCategoryElement() {
+//		waitForMenCategoryElement(60);
+//	    driver.findElement(By.cssSelector("ul >.men-cate-top-label")).click();
+//	    System.out.println("Element is clickable and working");
+//	    }
+	
 	/**
 	 * This method is used to setup the JavaScript Executor Instance.
 	 * 
@@ -412,6 +430,9 @@ public class UtilitiesCommon {
 							+ File.separator + "resources" + File.separator + "TestData" + File.separator
 							+ "TestDataDownload");
 			chromeOptions.setExperimentalOption("prefs", preferences);
+		  //run test with headless mode for git actions
+			//chromeOptions.addArguments("--headless");
+
 			driver = new ChromeDriver(chromeOptions);
 		}
 
@@ -473,7 +494,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		setupWebdriverWait(60);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
@@ -499,7 +520,7 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void applicationLogout() {
-		navigateToPage("https://www.onitsukatiger.com/jp/ja-jp/");
+	//	navigateToPage("https://www.onitsukatiger.com/jp/ja-jp/");
 		// HomePage.logout();
 	}
 
