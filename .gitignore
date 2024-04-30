@@ -1,3 +1,6 @@
+# Other Ignored files
+target/
+
 # Compiled class file
 *.class
 
@@ -22,4 +25,10 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-/target/
+
+.dockerignore
+.settings/org.testng.eclipse.maven.prefs
+target/classes/META-INF/MANIFEST.MF
+target/surefire-reports/
+target/test-classes/TestData/RestAssuredData.xlsx
+test-output/junitreports/
