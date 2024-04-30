@@ -1,0 +1,38 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Build with Maven
+        run: mvn clean test
+
+      - name: Generate Allure report
+        run: mvn allure:report
+
+      - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /allure-results
+
+      - name: Get GitHub Pages URL
+        id: pages_url
+        run: echo "::set-output name=url::https://SohamQAKrish.github.io/Krish_Automation/allure-results/index.html"
+
+      - name: Display Allure report link
+        run: echo "Allure report available at ${{ steps.pages_url.outputs.url }}"
