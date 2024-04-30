@@ -1,5 +1,4 @@
 # Other Ignored files
-target/
 
 # Compiled class file
 *.class
@@ -29,6 +28,5 @@ replay_pid*
 .dockerignore
 .settings/org.testng.eclipse.maven.prefs
 target/classes/META-INF/MANIFEST.MF
-target/surefire-reports/
 target/test-classes/TestData/RestAssuredData.xlsx
 test-output/junitreports/
