@@ -19,7 +19,7 @@ jobs:
           distribution: 'adopt'
 
       - name: pom.xml
-        run: cp pom.xml
+        run: cp /pom.xml
 
       - name: Build with Maven
         run: mvn clean test
