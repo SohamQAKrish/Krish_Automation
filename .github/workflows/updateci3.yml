@@ -20,7 +20,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Run pom.xml file
-        run: cp SohamQAKrish/Krish_Automation/pom.xml .
+        run: cp pom.xml .
 
       - name: Build with Maven
         run: mvn clean test
