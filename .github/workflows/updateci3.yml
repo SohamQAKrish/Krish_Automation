@@ -20,11 +20,13 @@ jobs:
           distribution: 'adopt'
 
       - name: Run pom.xml file
-      - run: |
-            if [ ! -f "pom.xml" ]; then
+        run: |
+          if [ ! -f "pom.xml" ]; then
             cp pom.xml .
-            fi
+          fi
 
+      - name: Resolve Maven dependencies
+        run: mvn dependency:resolve
 
       - name: Build with Maven
         run: mvn clean test
