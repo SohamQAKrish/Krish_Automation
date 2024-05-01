@@ -19,6 +19,18 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          version: '97.0.4692.71'  # Specify version 97
+
+      - name: Download ChromeDriver for version 97
+        run: |
+          mkdir drivers
+          curl -SL https://chromedriver.storage.googleapis.com/97.0.4692.71/chromedriver_linux64.zip > drivers/chromedriver.zip
+          unzip drivers/chromedriver.zip -d drivers/
+          chmod +x drivers/chromedriver
+
       - name: Run pom.xml file
         run: |
           if [ ! -f "pom.xml" ]; then
@@ -42,6 +54,18 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          version: '97.0.4692.71'  # Specify version 97
+
+      - name: Download ChromeDriver for version 97
+        run: |
+          mkdir drivers
+          curl -SL https://chromedriver.storage.googleapis.com/97.0.4692.71/chromedriver_linux64.zip > drivers/chromedriver.zip
+          unzip drivers/chromedriver.zip -d drivers/
+          chmod +x drivers/chromedriver
+
       - name: Run tests with WebDriver initialization
         run: |
           mvn clean test
@@ -53,6 +77,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
 
       - name: Generate Allure report
         run: mvn allure:report
