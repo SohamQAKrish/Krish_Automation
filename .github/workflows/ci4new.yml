@@ -1,0 +1,40 @@
+name: Selenium Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+    
+    - name: Build with Maven
+      run: mvn -B clean install -DskipTests=false
+    
+    - name: Run Selenium Tests
+      run: mvn test
+    
+    - name: Generate Allure report
+      run: mvn allure:report
+    
+    - name: Archive Allure report
+      uses: actions/upload-artifact@v2
+      with:
+        name: allure-report
+        path: target/site/allure-maven-plugin
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: target/surefire-reports/
