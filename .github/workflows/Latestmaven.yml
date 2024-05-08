@@ -1,32 +1,35 @@
-name: Krish Internal Automation Project
-
-on: [ push ]
-
+name: CI | CD
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: 'adopt'
-
-      - name: Run Test
-        if: always()
-        run: mvn test
-        continue-on-error: true
-
+          distribution: temurin
+      - name: Verify Java version
+        run: java -version
+      - name: Build with Maven
+        run: mvn -B clean verify
       - name: Get Allure history
-        uses: actions/checkout@v2
+        uses: actions/checkout@v
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
-
       - name: Allure Report action from marketplace
         uses: simple-elf/allure-report-action@master
         if: always()
@@ -36,11 +39,10 @@ jobs:
           gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
-
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v2
         env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
