@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: temurin
+          distribution: adopt
       - name: Verify Java version
         run: java -version
       - name: Build with Maven
