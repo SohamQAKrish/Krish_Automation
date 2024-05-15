@@ -45,7 +45,7 @@ jobs:
       - name: Verify Java version
         run: java -version
       - name: Run Tests
-        run: mvn clean test site -Dsurefire.suiteXmlFiles=LocalTestSuite.xml
+        run: mvn clean test site -Dsurefire.suiteXmlFiles=LocalTestSuite.xml site
         
   allure-report:
     runs-on: windows-latest
