@@ -23,9 +23,6 @@ jobs:
           cache: 'maven'
           distribution: 'adopt'
 
-      - name: Build with Maven
-        run: mvn clean package -B
-
       - name: Clean Allure results directory
         run: rm -rf target/allure-results/*
 
