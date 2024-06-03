@@ -1,4 +1,4 @@
-name: Shivam Allure Report | @shivam
+name: Allure Report | @shivam
 run-name: ${{ github.actor }} is creating Allure report 🚀
 
 on:
@@ -9,7 +9,7 @@ on:
 jobs:
   autotests:
     name: Run tests and generate Allure Report
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Clone repository
@@ -23,13 +23,14 @@ jobs:
           distribution: 'adopt'
 
       - name: Clean Allure results directory
-        shell: cmd
-        run: rd /s /q target\allure-results
+        run: rm -rf target/allure-results/*
 
       - name: Create target directory if not exists
-        shell: cmd
-        run: mkdir target\allure-results
+        run: mkdir -p target/allure-results
 
+      - name: Set permissions for target directory
+        run: chmod -R 777 target
+      
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -e -X
         continue-on-error: true
@@ -46,7 +47,7 @@ jobs:
         uses: simple-elf/allure-report-action@v1.8
         if: always()
         with:
-          allure_results: target\allure-results
+          allure_results: target/allure-results
           allure_history: allure-history
           
       - name: Publish Allure Report
