@@ -38,10 +38,6 @@ jobs:
 
       - name: Set permissions for target directory
         run: chmod -R 777 target
-
-      - name: POM clean
-        shell: bash
-        run: mvn clean install
       
       - name: Run Test
         run: mvn clean test -X
