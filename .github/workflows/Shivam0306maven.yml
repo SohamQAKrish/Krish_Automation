@@ -23,7 +23,8 @@ jobs:
           distribution: 'adopt'
 
       - name: Clean Allure results directory
-        run: del /q /s target\allure-results\*
+        run: rmdir /s /q target\allure-results
+
 
       - name: Create target directory if not exists
         run: mkdir target\allure-results
