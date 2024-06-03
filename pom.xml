@@ -181,7 +181,9 @@
             <version>2.12.0</version>
             <configuration>
                 <!-- Specify the directory to generate the Allure report -->
-        <reportDirectory>${project.basedir}/allure-report-html</reportDirectory>
+        		<reportVersion>2.17.2</reportVersion>
+      			<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+       			<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
             </configuration>
             <!-- Bind the Allure Maven plugin to the site phase -->
             <executions>
