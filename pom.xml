@@ -180,7 +180,8 @@
             <configuration>
                 <!-- Specify the directory to generate the Allure report -->
         		<reportVersion>${allure.version}</reportVersion>
-      			<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+      			<outputDirectory>${basedir}/target/allure-reports/</outputDirectory>
+                    	<allureResultsDirectory>${basedir}/target/allure-results</allureResultsDirectory>
 	    </configuration>
             <!-- Bind the Allure Maven plugin to the site phase -->
             <executions>
