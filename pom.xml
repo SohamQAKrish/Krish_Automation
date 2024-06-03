@@ -166,7 +166,7 @@
                     <!--suppress UnresolvedMavenProperty -->
                     <propertyName>${defaultTimeout}</propertyName>
                 </systemPropertyVariables>
-                <reportsDirectory>${project.build.directory}target/surefire-reports</reportsDirectory>
+                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
             </configuration>
         </plugin>
         
@@ -177,7 +177,7 @@
             <configuration>
                 <!-- Specify the directory to generate the Allure report -->
         		<reportVersion>2.17.2</reportVersion>
-      			<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+      			<resultsDirectory>${project.build.directory}target/allure-results</resultsDirectory>
        			<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
             </configuration>
             <!-- Bind the Allure Maven plugin to the site phase -->
