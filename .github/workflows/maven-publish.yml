@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Test
         run: mvn clean test
-        continue-on-error: true
+        
 
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
