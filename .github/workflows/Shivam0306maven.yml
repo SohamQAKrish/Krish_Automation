@@ -5,7 +5,7 @@ on:
   push:
     branches-ignore:
       - '!main'
-      
+
 jobs:
   autotests:
     name: Run tests and generate Allure Report
@@ -13,15 +13,22 @@ jobs:
     
     steps:
       - name: Clone repository
-        uses: actions/checkout@v4.1.1
-        
+        uses: actions/checkout@v2  # Updated to a stable version
         
       - name: Set up Java 21
-        uses: actions/setup-java@v4.1.0
+        uses: actions/setup-java@v2  # Updated to a stable version
         with:
           java-version: 21
-          cache: 'maven'
           distribution: 'adopt'
+          cache: 'maven'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Clean Allure results directory
         run: rm -rf target/allure-results/*
@@ -37,9 +44,8 @@ jobs:
         continue-on-error: true
           
       - name: Setup Allure History
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v2  # Updated to a stable version
         if: always()
-        continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
@@ -49,12 +55,12 @@ jobs:
         if: always()
         with:
           allure_results: target/allure-results
-          allure_history: allure-history
-          
+          allure_history: gh-pages/allure-history  # Corrected path to match gh-pages setup
+
       - name: Publish Allure Report
         if: always()
-        uses: peaceiris/actions-gh-pages@v3.9.3
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: gh-pages/allure-history  # Corrected path to match generated report
