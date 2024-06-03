@@ -10,16 +10,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<aspectj.version>1.9.21.1</aspectj.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-            <xmlPath>src/test/resources</xmlPath>
-
-            <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
-
-        <environment>QA</environment>
-    <browser>chrome</browser>
-    <defaultTimeout>30</defaultTimeout>
+	<aspectj.version>1.9.21.1</aspectj.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <xmlPath>src/test/resources</xmlPath>
+        <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
+	<environment>QA</environment>
+	<browser>chrome</browser>
+	<defaultTimeout>30</defaultTimeout>
     </properties>
     <!--Mentioned name and url-->
 
@@ -42,19 +40,16 @@
             <artifactId>testng</artifactId>
             <version>7.4.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
-        </dependency>
-        
-        
-		<dependency>
-   	 		<groupId>io.github.bonigarcia</groupId>
-   	 		<artifactId>webdrivermanager</artifactId>
-   	 		<version>5.8.0</version>
-		</dependency>
+        </dependency>        
+	<dependency>
+   	 	<groupId>io.github.bonigarcia</groupId>
+   	 	<artifactId>webdrivermanager</artifactId>
+   	 	<version>5.8.0</version>
+	</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
@@ -96,7 +91,7 @@
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-testng</artifactId>
-			<version>2.27.0</version>
+			<version>2.19.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
 		<dependency>
@@ -178,7 +173,7 @@
         <plugin>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-maven</artifactId>
-            <version>2.12.0</version>
+            <version>2.27.0</version>
             <configuration>
                 <!-- Specify the directory to generate the Allure report -->
         		<reportVersion>2.17.2</reportVersion>
@@ -204,11 +199,11 @@
             <version>3.7.0</version>
             <configuration>
                 <!-- Set compiler version to 17 -->
-                <compilerVersion>17</compilerVersion>
-                <source>17</source>
-                <target>17</target>
-                <testSource>17</testSource>
-                <testTarget>17</testTarget>
+                <compilerVersion>21</compilerVersion>
+                <source>21</source>
+                <target>21</target>
+                <testSource>21</testSource>
+                <testTarget>21</testTarget>
             </configuration>
         </plugin>
     
