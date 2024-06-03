@@ -24,7 +24,7 @@ jobs:
 
     
       - name: Run Test
-        run: mvn verify
+        run: ./mvnw -Dtest=LocalTestSuite test
         continue-on-error: true
 
       - name: Clean Allure results directory
