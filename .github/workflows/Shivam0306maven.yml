@@ -33,7 +33,7 @@ jobs:
         run: chmod -R 777 target
       
       - name: Run Test
-        run: mvn clean test -Dmaven.test.failure.ignore=true -e -X
+        run: mvn clean test
         continue-on-error: true
           
       - name: Setup Allure History
