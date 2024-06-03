@@ -40,7 +40,7 @@ jobs:
         run: chmod -R 777 target
       
       - name: Run Test
-        run: mvn clean test -X
+        run: ./mvnw verify
         continue-on-error: true
           
       - name: Setup Allure History
