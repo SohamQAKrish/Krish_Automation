@@ -21,6 +21,14 @@ jobs:
           java-version: 21
           distribution: 'adopt'
           cache: 'maven'
+      - name: Clean Allure results directory
+        run: rm -rf target/allure-results/*
+
+      - name: Create target directory if not exists
+        run: mkdir -p target/allure-results
+
+      - name: Set permissions for target directory
+        run: chmod -R 777 target
 
       - name: Cache Maven packages
         uses: actions/cache@v2
@@ -34,15 +42,6 @@ jobs:
       - name: Run Test
         run: ./mvnw -Dtest=LocalTestSuite.xml test
         continue-on-error: true
-
-      - name: Clean Allure results directory
-        run: rm -rf target/allure-results/*
-
-      - name: Create target directory if not exists
-        run: mkdir -p target/allure-results
-
-      - name: Set permissions for target directory
-        run: chmod -R 777 target
       
       - name: Setup Allure History
         uses: actions/checkout@v4  # Updated to a stable version
