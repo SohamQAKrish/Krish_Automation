@@ -70,9 +70,6 @@ import org.testng.asserts.SoftAssert;
 import org.yaml.snakeyaml.Yaml;
 import com.google.common.collect.Ordering;
 import com.opencsv.CSVReader;
-
-import enums.bateel.BateelLoginCheckoutEnum;
-import enums.bateel.BateelPLPPageEnum;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
@@ -764,14 +761,6 @@ public class UtilitiesCommon {
 		executeJS(JAVASCRIPT_BORDER, element);
 		element.click();
 	}
-	public static boolean clickAndVerifyClickable(BateelLoginCheckoutEnum enumValue) {
-        try {
-            click(enumValue);
-            return true;
-        } catch (AssertionError e) {
-            return false;
-        }
-    }
 
 	/**
 	 * This method will perform click operation on the element available on the web
@@ -2115,14 +2104,6 @@ public class UtilitiesCommon {
         return driver.getCurrentUrl();
 	}
 
-	public static String getTextFromElement(BateelPLPPageEnum bateelPlpPageEnumCss) {
-	    WebElement element = UtilitiesCommon.getElement(bateelPlpPageEnumCss);
-	    if (element != null) {
-	        return element.getAttribute("alt");
-	    } else {
-	        return null;
-	    }
-	}
 
 	public static int getCartCount() {
 	    WebElement cartCountElement = driver.findElement(By.cssSelector(".counter-number"));
