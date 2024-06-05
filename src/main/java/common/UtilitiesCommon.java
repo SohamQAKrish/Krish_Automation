@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -37,6 +40,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Assertions;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -52,6 +56,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -65,15 +70,14 @@ import org.testng.asserts.SoftAssert;
 import org.yaml.snakeyaml.Yaml;
 import com.google.common.collect.Ordering;
 import com.opencsv.CSVReader;
+
+import enums.bateel.BateelLoginCheckoutEnum;
+import enums.bateel.BateelPLPPageEnum;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import io.qameta.allure.TmsLink;
-import io.qameta.allure.TmsLinks;
-import testrail.APIClient;
-import testrail.APIException;
 
 /**
  * This class will contain all the common utility methods
@@ -87,9 +91,6 @@ public class UtilitiesCommon {
 	private static final String DEFAULT_TIMEOUT = "30";
 	private static final String USER_DIR_CONSTANT = "user.dir";
 	private static final String ATTRIBUTE_APPLICATION = "ApplicationURL";
-	private static final String KEY_RUN_ID = "run_id";
-	private static final String KEY_CASE_ID = "case_id";
-	private static final String TEXT_TESTRAIL_CASE_ID = "Testrail CaseID = ";
 	private static final String JAVASCRIPT_BORDER = "arguments[0].style.border='3px solid green'";
 	private static Logger logger = null;
 	private static Map<String, HashMap<String, String>> testCasesData;
@@ -98,23 +99,15 @@ public class UtilitiesCommon {
 	private static Map<String, String> testrailAttributes;
 	private static WebDriver driver;
 	private static String applicationUrl;
-	private static APIClient client;
 	private static File fileObj;
 	private static String environment;
-	private static final int TESTRAIL_PROJECT_ID = 9;
-	private static final String TESTRAIL_KEY = "TESTRAIL";
-	private static final String TESTRAIL_SANITY_SUITE_ID = "303";
-	private static final String TESTRAIL_REGRESSION_SUITE_ID = "304";
-	private static final int TESTRAIL_DEV_MILESTONE_ID = 30;
-	private static final int TESTRAIL_QA_MILESTONE_ID = 35;
-	private static final int TESTRAIL_PROD_MILESTONE_ID = 32;
 	private static final String WARNING = "**********************WARNING*********************";
 	private static Long waitTime;
 	private static String defaultTimeout;
 	private static ChromeOptions chromeOptions;
 	private static String browser;
-	private static WebDriverWait wait;
-	private static JavascriptExecutor jsExecutor;
+	public static WebDriverWait wait;
+	public static JavascriptExecutor jsExecutor;
 	private static Actions builder;
 	private static Robot robot;
 	private static SoftAssert softAssert;
@@ -167,10 +160,10 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+	    wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
 	/**
@@ -182,7 +175,9 @@ public class UtilitiesCommon {
 	public static void setupJavaScriptExecutor() {
 		jsExecutor = (JavascriptExecutor) driver;
 	}
-
+	 static {
+	        setupLogger();
+	    }
 	/**
 	 * This method will set up the log4j logger
 	 * 
@@ -190,10 +185,9 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void setupLogger() {
-		logger = LogManager.getLogger(UtilitiesCommon.class);
+        logger = LogManager.getLogger(UtilitiesCommon.class);
 	}
-
-	/**
+		/**
 	 * This method is used to initialize the object for Actions class
 	 * 
 	 * @author spandit
@@ -202,8 +196,12 @@ public class UtilitiesCommon {
 	public static void setupActionsBuilder() {
 		builder = new Actions(driver);
 	}
-
-	/**
+	
+	 public static void clickWithMouseHover(WebElement element) {
+	        Actions actions = new Actions(driver);
+	        actions.moveToElement(element).click().perform();
+	    }
+	/**	
 	 * This method is used to initialize the object for SoftAssert class
 	 * 
 	 * @author spandit
@@ -212,7 +210,6 @@ public class UtilitiesCommon {
 	public static void setupSoftAssert() {
 		softAssert = new SoftAssert();
 	}
-
 	/**
 	 * This method will log the message in console as well as in allure report.
 	 * 
@@ -237,6 +234,11 @@ public class UtilitiesCommon {
 		return EncryptDecrypt.decryptPassword(encryptedPassword);
 	}
 
+	public static void scrolltillpageend() {
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+	
 	/**
 	 * This method is used to read .yaml files
 	 * 
@@ -287,32 +289,7 @@ public class UtilitiesCommon {
 					"Invalid Environment detail is present in testng xml file or Environments.yaml file : "
 							+ environment);
 		}
-	}
-
-	/**
-	 * This method is used to read Testrail details from Environments.yaml and store it in map
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void readTestrailData() {
-		if (!isLocalSuite) {
-			log("Reading user credentials and URL for Testrail");
-			HashMap<String, Object> result = readYamlFile("Environments.yaml");
-			testrailAttributes = new HashMap<>();
-			HashMap<String, String> envDetails = (HashMap<String, String>) result.get(TESTRAIL_KEY);
-			try {
-				for (Entry<String, String> entry : envDetails.entrySet()) {
-					testrailAttributes.put(entry.getKey(), entry.getValue());
-				}
-			} catch (Exception e) {
-				throw new CustomExceptions("Expected Testrail key: " + TESTRAIL_KEY
-						+ " or values missing in Environments.yaml: " + e.getMessage());
-			}
-		} else {
-			log("Executing Local suite, Testrail data won't be read from Environments.yaml");
-		}
-	}
-
+	}	
 	/**
 	 * This method is used to read Test Class Data from TestData.yaml and store it in map
 	 * @param testClass Test Class
@@ -336,7 +313,6 @@ public class UtilitiesCommon {
 			throw new CustomExceptions("Test Data is not present in TestData.yaml for Class : " + className);
 		}
 	}
-
 	/**
 	 * This method is used to read Test Case Data from TestData.yaml and store it in map
 	 * @param result ITestResult
@@ -412,6 +388,9 @@ public class UtilitiesCommon {
 							+ File.separator + "resources" + File.separator + "TestData" + File.separator
 							+ "TestDataDownload");
 			chromeOptions.setExperimentalOption("prefs", preferences);
+		  //run test with headless mode for git actions
+			//chromeOptions.addArguments("--headless");
+
 			driver = new ChromeDriver(chromeOptions);
 		}
 
@@ -473,7 +452,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		//setupWebdriverWait(60);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
@@ -495,27 +474,29 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to Logout from the application.
+	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
 	public static void applicationLogout() {
-		navigateToPage("https://www.onitsukatiger.com/jp/ja-jp/");
+		// navigateToPage("https://staging2.bateel.com/en_in/");
 		// HomePage.logout();
 	}
 
 	/**
 	 * This method is used to close the web browser
+	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
 	public static void closeDriver() {
-		if (driver != null) {
-			log("Closing Browser");
-			driver.quit();
-			driver = null;
-		} else {
-			log("Web Driver is NULL and it has not initialized properly");
-		}
+//		if (driver != null) {
+//			log("Closing Browser");
+//			driver.quit();
+//			driver = null;
+//		} else {
+//			log("Web Driver is NULL and it has not initialized properly");
+//		}
 	}
 
 	/**
@@ -564,28 +545,6 @@ public class UtilitiesCommon {
 	 */
 	public static void setEnvironmentData(String attributeKey, String value) {
 		envAttributes.put(attributeKey, value);
-	}
-
-	/**
-	 * This method is used to get the Testrail Data from map
-	 * @param attributeKey Attribute Key
-	 * @return attributeValue Attribute Value
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static String getTestrailData(String attributeKey) {
-		return testrailAttributes.get(attributeKey);
-	}
-
-	/**
-	 * This method is used to set the Testrail Data to map
-	 * @param attributeKey Attribute Key
-	 * @param value Value
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void setTestrailData(String attributeKey, String value) {
-		testrailAttributes.put(attributeKey, value);
 	}
 
 	/**
@@ -672,9 +631,12 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static WebElement getElement(Enum<?> enumValue) {
-		By locator = getLocator(enumValue);
-		waitForElementIsVisible(locator);
-		return driver.findElement(locator);
+	    By locator = getLocator(enumValue);
+	    if (locator == null) {
+	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+	    }
+	    waitForElementIsVisible(locator);
+	    return driver.findElement(locator);
 	}
 
 	/**
@@ -685,7 +647,11 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static List<WebElement> getElements(Enum<?> enumValue) {
-		return driver.findElements(getLocator(enumValue));
+	    By locator = getLocator(enumValue);
+	    if (locator == null) {
+	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+	    }
+	    return driver.findElements(locator);
 	}
 
 	/**
@@ -696,8 +662,13 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static String getElementText(Enum<?> enumValue) {
-		WebElement element = getElement(enumValue);
-		return element.getText();
+	    try {
+	        WebElement element = getElement(enumValue);
+	        return element.getText();
+	    } catch (NoSuchElementException e) {
+	        System.out.println("Element not found for enum value: " + enumValue);
+	        return null; // or you can return an empty string or handle it as per your requirement
+	    }
 	}
 
 	/**
@@ -756,7 +727,17 @@ public class UtilitiesCommon {
 		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpathExpression)));
 		return driver.findElements(By.xpath(xpathExpression));
 	}
-
+	
+	public static void waitForElementIsClickable(Enum<?> enumValue) {
+	    By locator = getLocator(enumValue);
+	    if (locator == null) {
+	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+	    }
+	    long timeoutSeconds = Long.parseLong(DEFAULT_TIMEOUT);
+	    WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
+	    wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
+	
 	/**
 	 * This method is used to generate the Dynamic Xpath
 	 * @param xpath        XPATH
@@ -783,6 +764,14 @@ public class UtilitiesCommon {
 		executeJS(JAVASCRIPT_BORDER, element);
 		element.click();
 	}
+	public static boolean clickAndVerifyClickable(BateelLoginCheckoutEnum enumValue) {
+        try {
+            click(enumValue);
+            return true;
+        } catch (AssertionError e) {
+            return false;
+        }
+    }
 
 	/**
 	 * This method will perform click operation on the element available on the web
@@ -871,7 +860,7 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	private static void waitForElementIsClickable(WebElement element) {
+	public static void waitForElementIsClickable(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
@@ -911,6 +900,15 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		return element.isDisplayed();
 	}
+	
+	public static boolean isElementPresent(By locator) {
+	    try {
+	        driver.findElement(locator);
+	        return true;
+	    } catch (NoSuchElementException e) {
+	        return false;
+	    }
+	}
 
 	/**
 	 * This is used to check the web element is selected or not
@@ -934,10 +932,9 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void javaScriptClick(Enum<?> enumValue) {
-		WebElement element = getElement(enumValue);
-		executeJS("arguments[0].click();", element);
+	    WebElement element = getElement(enumValue);
+	    executeJS("arguments[0].click();", element);
 	}
-
 	/**
 	 * This method will enter the specified value in the text field using javascript
 	 * executor.
@@ -1190,7 +1187,16 @@ public class UtilitiesCommon {
 		}
 		return isElementVisible;
 	}
-
+	public static boolean waitForElementIsNotVisible(By locator) {
+	    boolean isElementNotVisible;
+	    try {
+	        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+	        isElementNotVisible = true;
+	    } catch (TimeoutException exception) {
+	        isElementNotVisible = false;
+	    }
+	    return isElementNotVisible;
+	}
 	/**
 	 * This method will check if the dynamically generated element is displayed.
 	 * 
@@ -1396,242 +1402,6 @@ public class UtilitiesCommon {
 	 */
 	public static String generateRandomText(int value) {
 		return RandomStringUtils.randomAlphabetic(value);
-	}
-
-	/**
-	 * This method is used to create a new test run dynamically in Testrail
-	 * 
-	 * @param context Context
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void createTestrailRun(ITestContext context) {
-		if (!isLocalSuite) {
-			int milestone;
-			switch (environment.toUpperCase()) {
-			case "DEV":
-				milestone = TESTRAIL_DEV_MILESTONE_ID;
-				break;
-			case "PROD":
-				milestone = TESTRAIL_PROD_MILESTONE_ID;
-				break;
-			case "QA":
-			default:
-				milestone = TESTRAIL_QA_MILESTONE_ID;
-				break;
-			}
-			String testrailSuiteID = context.getCurrentXmlTest().getParameter("testrailSuiteID");
-			if ((testrailSuiteID.equals(TESTRAIL_REGRESSION_SUITE_ID))
-					|| (testrailSuiteID.equals(TESTRAIL_SANITY_SUITE_ID))) {
-				client = new APIClient(getTestrailData("URL"));
-				client.setUser(getTestrailData("Username"));
-				client.setPassword(UtilitiesCommon.getDecryptedPassword(getTestrailData("Password")));
-				Map<String, Serializable> data = new HashMap<>();
-				data.put("suite_id", testrailSuiteID);
-				data.put("include_all", true);
-				data.put("name", "[" + environment + "]" + " Automated Test Run: " + getCurrentDateTimeStamp());
-				data.put("milestone_id", milestone);
-				JSONObject c = null;
-				try {
-					c = (JSONObject) client.sendPost("add_run/" + TESTRAIL_PROJECT_ID, data);
-					long runId = (long) c.get("id");
-					context.setAttribute(KEY_RUN_ID, runId);
-					log("Test Run created successfully in TestRail with RUN ID= " + runId + " on Environment = "
-							+ environment);
-				} catch (IOException e) {
-					log("Issue in creating JSON Object while adding Testrail Run: " + e.getMessage());
-				} catch (APIException e) {
-					log("Failed to create TestRail Run using Testrail API: " + e.getMessage());
-				} catch (Exception e) {
-					log("Failed to create TestRail Run: " + e.getMessage());
-				}
-			} else {
-				log("Value of Testrail Suite ID entered in XML file is '" + testrailSuiteID
-						+ "' which is not correct. Expected value for Sanity Suite is 303 and Regression Suite is 304");
-			}
-		} else {
-			log("Executing Local suite, Test Run won't be created in Testrail");
-		}
-	}
-
-	/**
-	 * This method is used to fetch the Testrail test case id using @TmsLink
-	 * or @TmsLinks annotations.
-	 * 
-	 * @param result result
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void getTestrailCaseID(ITestResult result) {
-		if (!isLocalSuite) {
-			Method m = result.getMethod().getConstructorOrMethod().getMethod();
-			if (m.isAnnotationPresent(TmsLink.class)) {
-				TmsLink tms = m.getAnnotation(TmsLink.class);
-				result.setAttribute(KEY_CASE_ID, tms.value());
-			} else if (m.isAnnotationPresent(TmsLinks.class)) {
-				TmsLinks tms = m.getAnnotation(TmsLinks.class);
-				result.setAttribute(KEY_CASE_ID, tms.value());
-			} else {
-				log(WARNING);
-				log("Testrail case id is missing in @TmsLink or @TmsLinks for method : " + result.getName()
-						+ " in Test Class : " + result.getTestClass().getName());
-				log(WARNING);
-			}
-		} else {
-			log("Executing Local suite, Testrail Case ID won't be fetched");
-		}
-	}
-
-	/**
-	 * This method is used to update success result in Testrail for Single Testrail
-	 * Test Case or Multiple Testrail Test Cases.
-	 * 
-	 * @param result result
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void setTestrailSuccessResults(ITestResult result) {
-		if (!isLocalSuite) {
-			if (result.getAttribute(KEY_CASE_ID) instanceof String) {
-				String caseId = (String) result.getAttribute(KEY_CASE_ID);
-				if (caseId != null) {
-					log(TEXT_TESTRAIL_CASE_ID + caseId);
-					setSuccessResult(result, caseId);
-				}
-			} else {
-				TmsLink[] caseIds = (TmsLink[]) result.getAttribute(KEY_CASE_ID);
-				for (TmsLink caseId : caseIds) {
-					if (caseIds != null) {
-						log(TEXT_TESTRAIL_CASE_ID + caseId);
-						setSuccessResult(result, caseId.value());
-					}
-				}
-			}
-		} else {
-			log("Executed Local suite, results won't be updated in Testrail");
-		}
-	}
-
-	/**
-	 * This method is used to update the Status and Comment in Testrail once the
-	 * test case is passed
-	 * 
-	 * @param result result
-	 * @param caseId Case Id
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	private static void setSuccessResult(ITestResult result, String caseId) {
-		Long runId = (Long) result.getTestContext().getAttribute(KEY_RUN_ID);
-		log("Passed TestRailCaseID = " + caseId + " in TestRailRunID = " + runId);
-		String comment = "Testrail case ID = " + caseId + " and Test Method name= "
-				+ result.getMethod().getMethodName();
-		boolean testResult = true;
-		Map<String, Serializable> data = new HashMap<>();
-		data.put("status_id", 1);
-		data.put("comment", comment);
-		try {
-			client.sendPost("add_result_for_case/" + runId + "/" + caseId, data);
-		} catch (IOException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. IOException: : " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		} catch (APIException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. APIException: : " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		}
-		if (testResult) {
-			log("Test Results are updated successfully in Testrail for Passed TestCase ID: " + caseId + " in Test Run: "
-					+ runId);
-			log("Corresponding Test Method name= " + result.getMethod().getMethodName());
-		}
-	}
-
-	/**
-	 * This method is used to update failure result in Testrail for Single Testrail
-	 * Test Case or Multiple Testrail Test Cases.
-	 * 
-	 * @param result result
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void setTestrailFailureResults(ITestResult result) {
-		if (!isLocalSuite) {
-			if (result.getAttribute(KEY_CASE_ID) instanceof String) {
-				String caseId = (String) result.getAttribute(KEY_CASE_ID);
-				if (caseId != null) {
-					log(TEXT_TESTRAIL_CASE_ID + caseId);
-					setFailureResult(result, caseId);
-				}
-			} else {
-				TmsLink[] caseIds = (TmsLink[]) result.getAttribute(KEY_CASE_ID);
-				if (caseIds != null) {
-					for (TmsLink caseId : caseIds) {
-						log(TEXT_TESTRAIL_CASE_ID + caseId);
-						setFailureResult(result, caseId.value());
-					}
-				}
-			}
-		} else {
-			log("Executed Local suite, results won't be updated in Testrail");
-		}
-	}
-
-	/**
-	 * This method is used to update the Status, Comment with error stacktrace and
-	 * Attachment in Testrail once the test case is failed.
-	 * 
-	 * @param result result
-	 * @param caseId Case Id
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	private static void setFailureResult(ITestResult result, String caseId) {
-		Long runId = (Long) result.getTestContext().getAttribute(KEY_RUN_ID);
-		log("Failed TestRailCaseID = " + caseId + " in TestRailRunID = " + runId);
-		String comment = "Testrail case ID= " + caseId + ", Test Method name= " + result.getMethod().getMethodName()
-				+ '\n' + '\n' + "ERROR: " + result.getThrowable().toString();
-		Map<String, Serializable> data = new HashMap<>();
-		boolean testResult = true;
-		data.put("status_id", 5);
-		data.put("comment", comment);
-		try {
-			client.sendPost("add_result_for_case/" + runId + "/" + caseId, data);
-		} catch (IOException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. IOException: " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		} catch (APIException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. APIException: " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		}
-		if (driver != null) {
-			fileObj = captureScreenshot(result.getMethod().getMethodName());
-			try {
-				client.sendPost("add_attachment_to_case/" + caseId, fileObj.toString());
-			} catch (IOException e) {
-				log(WARNING);
-				log("Unable to add screenshot attachment for failed test case in Testrail" + e.getMessage());
-				log(WARNING);
-				testResult = false;
-			} catch (APIException e) {
-				log(WARNING);
-				log("Unable to add screenshot attachment for failed test case in Testrail " + e.getMessage());
-				log(WARNING);
-				testResult = false;
-			}
-		}
-		if (testResult) {
-			log("Test Results updated and screenshot attached successfully in Testrail for Failed TestCase ID: "
-					+ caseId + " in Test Run: " + runId);
-			log("Corresponding Test Method name= " + result.getMethod().getMethodName());
-		}
 	}
 
 	/**
@@ -2307,4 +2077,77 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
+
+	public static void waitForOverlayToDisappear() {
+
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+	    try {  
+	        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-mask")));
+	    } catch (TimeoutException e) {
+	        // Log a message or take appropriate action if the overlay doesn't disappear within the timeout
+	        System.out.println("Overlay did not disappear within the timeout.");
+	    }
+	}
+
+	public static void waitForElementToDisappear(By cssSelector) {
+		// TODO Auto-generated method stub
+		WebDriverWait wait = new WebDriverWait(driver, 30); // Adjust timeout as needed
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(cssSelector));
+	}
+
+	public static String gettitle() {
+			String Pagetitle = driver.getTitle();
+			return Pagetitle;
+		}
+	
+	public static void switchtoTab(int x) {
+		 ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		    driver.switchTo().window(tabs.get(x));
+	}
+
+	public static void scrollDownByPixels(int pixels) {
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+	    js.executeScript("window.scrollBy(0, arguments[0]);", pixels);
+	}
+
+	public static String getCurrentUrl() {
+		// TODO Auto-generated method stub
+        return driver.getCurrentUrl();
+	}
+
+	public static String getTextFromElement(BateelPLPPageEnum bateelPlpPageEnumCss) {
+	    WebElement element = UtilitiesCommon.getElement(bateelPlpPageEnumCss);
+	    if (element != null) {
+	        return element.getAttribute("alt");
+	    } else {
+	        return null;
+	    }
+	}
+
+	public static int getCartCount() {
+	    WebElement cartCountElement = driver.findElement(By.cssSelector(".counter-number"));
+	    String cartCountText = cartCountElement.getText().trim();
+
+	    if (cartCountText.isEmpty()) {
+	        System.out.println("Cart count text is empty.");
+	        return 0; 
+	    }
+
+	    int cartCount;
+	    try {
+	        cartCount = Integer.parseInt(cartCountText);
+	    } catch (NumberFormatException e) {
+	        System.out.println("Unable to parse cart count text: " + cartCountText);
+	        return 0; 
+	    }
+
+	    return cartCount;
+	}
+
+	  public static String isElementClickable(Enum<?> enumValue) {
+	        
+	        return "clickable";
+	    }
+
+	
 }
