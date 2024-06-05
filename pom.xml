@@ -155,7 +155,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <suiteXmlFiles>
-                        <suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
+                        <suiteXmlFile>C:\Users\kashyap.dave\eclipse-workspace\HybridFramework\src\test\resources\LocalTestSuite.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <environment>${environment}</environment>
