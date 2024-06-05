@@ -2,7 +2,7 @@ package enums.onitsuka;
 
 /**This enum will store objects available on Onitsuka Home page.
 @author spandit
-@lastmodifiedby spandit
+@lastmodifiedby kdave
 */
 
 /* Note: Enum key should be in capital case and should end with either of below locator types:

@@ -154,18 +154,14 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-            <suiteXmlFiles>
-                <!--suppress UnresolvedMavenProperty -->
-                <suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
-            </suiteXmlFiles>
-            <systemPropertyVariables>
-                <!--suppress UnresolvedMavenProperty -->
-                <propertyName>${environment}</propertyName>
-                <!--suppress UnresolvedMavenProperty -->
-                <propertyName>${browser}</propertyName>
-                <!--suppress UnresolvedMavenProperty -->
-                <propertyName>${defaultTimeout}</propertyName>
-            </systemPropertyVariables>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <systemPropertyVariables>
+                        <environment>${environment}</environment>
+                        <browser>${browser}</browser>
+                        <defaultTimeout>${defaultTimeout}</defaultTimeout>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
@@ -206,6 +202,19 @@
                     <execution>
                         <goals>
                             <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+             <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>report</goal>
+                            <goal>aggregate</goal>
                         </goals>
                     </execution>
                 </executions>

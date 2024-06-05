@@ -13,7 +13,7 @@ public class OnitsukaPage {
 	/**
 	 * This method is used to verify Onitsuka Tiger's page Title.
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
 	public static void verifyOnitSukaPageHeaderTitle() {
 		UtilitiesCommon.waitForElementIsPresent(OnitsukaHomePageEnum.ONITSUKAPAGE_PAGE_TITLE_CSS);

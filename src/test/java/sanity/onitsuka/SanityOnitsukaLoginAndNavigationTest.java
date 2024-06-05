@@ -15,7 +15,7 @@ import page.onitsuka.OnitsukaPage;
 public class SanityOnitsukaLoginAndNavigationTest {
 	/**
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
 	@Test(testName = "Onitsuka Web Application Navigation")
 	@TmsLink("49700")
@@ -27,7 +27,7 @@ public class SanityOnitsukaLoginAndNavigationTest {
 	
 	/**
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
 	@Test(testName = "Onitsuka Men Category Navigation")
 	@TmsLink("49700")

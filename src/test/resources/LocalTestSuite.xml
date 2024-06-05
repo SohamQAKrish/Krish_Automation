@@ -3,7 +3,7 @@
 <suite name="Local Test Suite">
 
 	<test name="Local Tests">
-		<parameter name="environment" value="${environment}" />
+		<parameter name="environment" value="${environment}"/>
 		<parameter name="browser" value="${browser}" />
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<classes>
