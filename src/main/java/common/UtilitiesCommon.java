@@ -163,12 +163,6 @@ public class UtilitiesCommon {
 	    wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
-	/**
-	 * This method is used to setup the JavaScript Executor Instance.
-	 * 
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
 	public static void setupJavaScriptExecutor() {
 		jsExecutor = (JavascriptExecutor) driver;
 	}
@@ -2042,15 +2036,13 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void waitForMilliseconds(int milliseconds) {
-		try {
-			int timeInSeconds = milliseconds / 1000;
-			WebDriverWait customWait = new WebDriverWait(driver, timeInSeconds);
-			customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
-		} catch (TimeoutException e) {
-			log("Waited for: " + milliseconds + " ms");
-		} catch (Exception e) {
-			log(e.getMessage());
-		}
+	    try {
+	        Thread.sleep(milliseconds);
+	        log("Waited for: " + milliseconds + " ms");
+	    } catch (InterruptedException e) {
+	        log(e.getMessage());
+	        Thread.currentThread().interrupt(); // Restore interrupted status
+	    }
 	}
 
 	/**
@@ -2068,13 +2060,10 @@ public class UtilitiesCommon {
 	}
 
 	public static void waitForOverlayToDisappear() {
-
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 	    try {  
 	        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-mask")));
 	    } catch (TimeoutException e) {
-	        // Log a message or take appropriate action if the overlay doesn't disappear within the timeout
-	        System.out.println("Overlay did not disappear within the timeout.");
+	        log("Overlay did not disappear within the timeout.");
 	    }
 	}
 
