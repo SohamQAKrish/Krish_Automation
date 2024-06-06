@@ -152,36 +152,30 @@
 
 	 <build>
     <plugins>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
-        <configuration>
-            <!-- Use properties for suiteXmlFile -->
-            <suiteXmlFiles>
-                <suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
-            </suiteXmlFiles>
-            <!-- Add other configurations as needed -->
-
-            <!-- Specify Java agent for AspectJ weaver -->
-            <argLine>
-                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-            </argLine>
-
-            <!-- Pass system property variables for test configuration -->
-            <systemPropertyVariables>
-                <!--suppress UnresolvedMavenProperty -->
-                <propertyName>${environment}</propertyName>
-                <!--suppress UnresolvedMavenProperty -->
-                <propertyName>${browser}</propertyName>
-                <!--suppress UnresolvedMavenProperty -->
-                <propertyName>${defaultTimeout}</propertyName>
-            </systemPropertyVariables>
-
-            <!-- Specify directory for surefire reports -->
-            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-        </configuration>
-    </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.2.5</version>
+            <configuration>
+                <!-- Use properties for suiteXmlFile -->
+                <suiteXmlFiles>
+                    <suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
+                </suiteXmlFiles>
+                <!-- Add other configurations as needed -->
+                <argLine>
+                    -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                </argLine>
+                <systemPropertyVariables>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <propertyName>${environment}</propertyName>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <propertyName>${browser}</propertyName>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <propertyName>${defaultTimeout}</propertyName>
+                </systemPropertyVariables>
+                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+            </configuration>
+        </plugin>
         <!-- Add Allure plugin -->
         <plugin>
             <groupId>io.qameta.allure</groupId>
