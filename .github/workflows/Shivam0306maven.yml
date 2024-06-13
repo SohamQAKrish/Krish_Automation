@@ -23,7 +23,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Run Test
-        run: mvn clean test -DskipTests
+        run: mvn clean test
         continue-on-error: true
 
       - name: Setup Allure History
