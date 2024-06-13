@@ -1,5 +1,5 @@
 QA:
- ApplicationURL: "https://www.preprod.onitsukatiger.com/jp/ja-jp/"
+ ApplicationURL: "https://mcstaging.hamleys.com/"
  AdminUserName: "admin"
  AdminPassword: "bG9jYWw="
 PROD:
