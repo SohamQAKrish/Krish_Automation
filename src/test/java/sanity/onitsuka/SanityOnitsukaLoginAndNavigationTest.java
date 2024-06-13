@@ -34,6 +34,7 @@ public class SanityOnitsukaLoginAndNavigationTest {
 	@TmsLink("49700")
 	@Description("This Test is used to Verify the Navigation to the Men Category")
 	public void testOnitSukaMenCategoryNavigation() {
+		UtilitiesCommon.launchApplication();
 		//LoginPage.login("AdminUserName", "AdminPassword");
 		//OnitsukaPage.verifyOnitSukaPageMenCategory();
 	}
