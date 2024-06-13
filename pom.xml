@@ -18,7 +18,7 @@
 	<environment>QA</environment>
 	<browser>chrome</browser>
 	<defaultTimeout>30</defaultTimeout>
-	<allure.version>2.26.0</allure.version>
+	
     </properties>
     <!--Mentioned name and url-->
 
@@ -179,8 +179,6 @@
             <version>2.12.0</version>
             <configuration>
                 <!-- Specify the directory to generate the Allure report -->
-        		<reportVersion>${allure.version}</reportVersion>
-      			<outputDirectory>${basedir}/target/allure-reports/</outputDirectory>
                     	<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
 	    </configuration>
             <!-- Bind the Allure Maven plugin to the site phase -->
