@@ -33,13 +33,14 @@ public class LoginPage {
 	 * @lastmodifiedby spandit
 	 */
 	public static void reloginAfterLogout(String usernameKey, String passwordKey) {
-		UtilitiesCommon.openUrl();
-		String username = UtilitiesCommon.getEnvironmentData(usernameKey);
-		String password = UtilitiesCommon.getEnvironmentData(passwordKey);
-		UtilitiesCommon.log("Logging in with User name : " + username);
-		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_USERNAME_TEXT_BOX_CSS, username);
-		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
-				UtilitiesCommon.getDecryptedPassword(password));
-		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_BUTTON_CSS);
+		UtilitiesCommon.launchApplication();
+		//UtilitiesCommon.openUrl();
+		//String username = UtilitiesCommon.getEnvironmentData(usernameKey);
+		//String password = UtilitiesCommon.getEnvironmentData(passwordKey);
+		//UtilitiesCommon.log("Logging in with User name : " + username);
+		//UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_USERNAME_TEXT_BOX_CSS, username);
+		//UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
+				//UtilitiesCommon.getDecryptedPassword(password));
+		//UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_BUTTON_CSS);
 	}
 }
