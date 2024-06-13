@@ -21,10 +21,19 @@ jobs:
           java-version: 17
           cache: 'maven'
           distribution: 'zulu'
+      - name: Install Allure
+        run: |
+          wget -O allure-2.13.8.tgz https://github.com/allure-framework/allure2/releases/download/2.13.8/allure-2.13.8.tgz
+          tar -zxvf allure-2.13.8.tgz
+          sudo mv allure-2.13.8 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Run Test
         run: mvn clean test
         continue-on-error: true
+        
+      - name: Check Allure Results Directory
+        run: ls -la target/allure-results
 
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
