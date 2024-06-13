@@ -9,7 +9,7 @@
 		<classes>
 			<class name="sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest">
 				<methods>
-					<include name="testOnitSukaMenCategoryNavigation" />
+					<include name="testOnitSukaPageHeaderTitle" />
 				</methods>
 			</class>
 		</classes>
