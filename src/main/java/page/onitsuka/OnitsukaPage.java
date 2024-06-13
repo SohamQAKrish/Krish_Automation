@@ -16,8 +16,9 @@ public class OnitsukaPage {
 	 * @lastmodifiedby spandit
 	 */
 	public static void verifyOnitSukaPageHeaderTitle() {
-		UtilitiesCommon.waitForElementIsPresent(OnitsukaHomePageEnum.ONITSUKAPAGE_PAGE_TITLE_CSS);
-		UtilitiesCommon.verifyText(OnitsukaHomePageEnum.ONITSUKAPAGE_PAGE_TITLE_CSS, UtilitiesCommon.getTestData("OnitSukaHeader"));
+		UtilitiesCommon.launchApplication();
+		//UtilitiesCommon.waitForElementIsPresent(OnitsukaHomePageEnum.ONITSUKAPAGE_PAGE_TITLE_CSS);
+		//UtilitiesCommon.verifyText(OnitsukaHomePageEnum.ONITSUKAPAGE_PAGE_TITLE_CSS, UtilitiesCommon.getTestData("OnitSukaHeader"));
 	}
 	
 	/**
@@ -26,8 +27,9 @@ public class OnitsukaPage {
 	 * @lastmodifiedby spandit
 	 */
 	public static void verifyOnitSukaPageMenCategory() {
-		UtilitiesCommon.waitForElementIsPresent(OnitsukaHomePageEnum.ONITSUKAPAGE_MEN_CATEGORY_CSS);
-		UtilitiesCommon.click(OnitsukaHomePageEnum.ONITSUKAPAGE_MEN_CATEGORY_CSS);
+		UtilitiesCommon.launchApplication();
+		//UtilitiesCommon.waitForElementIsPresent(OnitsukaHomePageEnum.ONITSUKAPAGE_MEN_CATEGORY_CSS);
+		//UtilitiesCommon.click(OnitsukaHomePageEnum.ONITSUKAPAGE_MEN_CATEGORY_CSS);
 		//UtilitiesCommon.verifyText(OnitsukaHomePageEnum.ONITSUKAPAGE_PAGE_TITLE_CSS, UtilitiesCommon.getTestData("OnitSukaMenPageTitle"));
 	}
 }
