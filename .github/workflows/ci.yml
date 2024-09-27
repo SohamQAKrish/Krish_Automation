@@ -3,7 +3,7 @@ name: Docker YML workflow
 on:
   push:
     branches:
-      - dockerIntegration  # Adjust to the your branch name
+      - main  # Adjust to the your branch name
  
 jobs:
   build:
