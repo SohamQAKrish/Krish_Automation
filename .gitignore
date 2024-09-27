@@ -30,3 +30,5 @@ replay_pid*
 target/classes/META-INF/MANIFEST.MF
 target/test-classes/TestData/RestAssuredData.xlsx
 test-output/junitreports/
+/target/
+/allure-results/environment.properties
