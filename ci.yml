@@ -16,14 +16,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   run-end-to-end-test:
-
     # Runner will run with this OS
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout DockerIntegration branch of the repo
         uses: actions/checkout@v3
 
@@ -37,6 +34,9 @@ jobs:
           distribution: 'adopt'
           # Cache dependencies from pom.xml, reduces run time by only downloading new dependencies
           cache: 'maven'
+
+      - name: Verify Java Version
+        run: java -version  # Optional: Verify that JDK 17 is set up correctly
 
       - name: Run EndToEnd Test
         run: mvn test
