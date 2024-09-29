@@ -1,12 +1,13 @@
 name: Main Branch | GitHub Actions
 
 on:
-  push:
+  commit:
     branches:
-      - main
+      - DockerIntegration
   pull_request:
     branches:
-      - main
+       - DockerIntegration
+     
   workflow_dispatch:
     inputs:
       suite:
@@ -54,7 +55,7 @@ jobs:
         run: docker-compose -f docker/armseleniumgrid.yml up -d
 
       - name: Run Tests
-        run: mvn clean test
+        run: mvn clean test -X
         continue-on-error: true
 
       - name: Stop Selenium Grid
