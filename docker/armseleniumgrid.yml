@@ -21,7 +21,7 @@ services:
     depends_on:
       - grid_hub_service
     ports:
-      - "7901:7900"                         # expose No VNC service port of node container, if used with scaling in mind then local machine port can be removed and docker will auto assign a port
+      - "7901:7900"                         # Expose No VNC service port of node container, if used with scaling in mind then local machine port can be removed and docker will auto assign a port
     environment:
       SE_EVENT_BUS_HOST: hub
       SE_EVENT_BUS_PUBLISH_PORT: 4442
